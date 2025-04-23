@@ -1,0 +1,120 @@
+html,body{
+    height: 100%;
+    
+}
+
+form{
+    margin: 20px;
+    
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ececec;
+   
+}
+
+h1 {
+    color: #575a5cec;
+    margin-top: 30px;
+    font-size: 30px;
+    text-align: center;
+}
+div{
+    
+    background-color: rgb(255, 255, 255);
+    box-shadow: 15px 20px 20px rgba(0, 0, 0, 0.116); 
+    border-radius: 3% 3% 3% 3%;
+    padding: 10px;
+    border: 1px solid rgb(190, 190, 190);
+    
+
+}
+input {
+    
+  
+    width: 275px;
+    padding: 0.5rem;
+}
+label{
+   margin-bottom: 10px;
+   margin-top: 10px;
+    display: block;
+}
+.sub{
+    display: block;
+    background-color: #555151;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 5px 7px 0px rgba(0, 0, 0, 0.281); 
+    color: white;
+    font-weight: bold;
+    margin: auto;
+}
+.sub:hover{
+    background-color: #424344;
+    box-shadow: 5px 7px 0px rgba(0, 0, 0, 0.466); 
+    color: white;
+}
+select{
+    margin-bottom: 10px;
+
+}
+form{
+
+    display: block;
+}
+.phpcuadre{
+    width: 800px;
+    height: 600;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 7px 0px rgba(0, 0, 0, 0.466); 
+    display: inline-block;
+    
+}
+a{
+    text-decoration: none;
+    font-weight: bold;
+    color:#00ADEF;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid rgb(80, 80, 80);
+    border-radius: 6px;
+}
+li{
+    padding: 10px;
+}
+
+.boto{
+    background-color: rgb(240, 240, 240);
+    text-decoration: none;
+    font-weight: lighter;
+    color:#4444448c;
+    border-radius: 30px;
+    position: fixed;
+    right: 1%;
+    top: 5%
+}
+
+.banner{
+    background-color: #424344;
+    position: fixed;
+    top: 5px;
+    height: 11%;
+    width: 100%;
+    box-shadow: none;
+    
+   
+}
+
+.bigtitol{
+color: rgb(233, 233, 233);
+width: 40%;
+}
+
+
+
+
