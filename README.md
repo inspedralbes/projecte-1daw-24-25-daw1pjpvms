@@ -1,1 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Oi3CGk0x)
+En este proyecto hemos creado un sistema de gestion de incidencias informaticas ambientada para una escuela.
+Con este proyecto hemos podido mejorar y dar a enseñar nuestras habilidades y conocimientos. 
+Hemos implementado HTML, CSS, PHP, una base de datos en MONGODB, Javascript, repositorios del CSS.
