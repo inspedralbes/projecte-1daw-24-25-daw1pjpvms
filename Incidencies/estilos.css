@@ -76,14 +76,16 @@ form{
     
 }
 a{
+    
     text-decoration: none;
     font-weight: bold;
-    color:#00ADEF;
+    color:#424344;
     padding: 5px;
     margin: 5px;
     border: 1px solid rgb(80, 80, 80);
     border-radius: 6px;
 }
+
 li{
     padding: 10px;
 }
@@ -92,11 +94,21 @@ li{
     background-color: rgb(240, 240, 240);
     text-decoration: none;
     font-weight: lighter;
+    color:#575757d5;
+    border-radius: 30px;
+  
+}
+
+a.boto{
+    background-color: rgb(240, 240, 240);
+    text-decoration: none;
+    font-weight: lighter;
     color:#4444448c;
     border-radius: 30px;
     position: fixed;
-    right: 1%;
+    right: 5%;
     top: 5%
+
 }
 
 .banner{
@@ -113,6 +125,8 @@ li{
 .bigtitol{
 color: rgb(233, 233, 233);
 width: 40%;
+text-align: left;
+margin-left: 3%;
 }
 
 

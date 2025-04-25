@@ -120,8 +120,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 <body>
 
 <div class="banner"> 
-    <h1 class= "bigtitol"> Gestió d'incidencies</h1>
-      <a href="llistat.php" class="boto">Accés Tecnics</a> 
+    <h1 class= "bigtitol"> Formulari d'incidencies</h1>
+      <a href="llistat.php" class="boto">Area de gestions</a> 
     </div>
     <?php
 
@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     ?>
 
         <div>
-            <h1> Inici de sesió</h1>
+            <h1> </h1>
 
             <form action="" method="post">
                 <?php
