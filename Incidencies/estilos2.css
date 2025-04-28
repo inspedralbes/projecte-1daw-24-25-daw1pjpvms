@@ -21,15 +21,18 @@ body {
 }
 
 .contenidor {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding-top: 11%;
     box-sizing: border-box;
     opacity: 0; 
-    animation: aparicioSuau 1s forwards; 
+    animation: aparicioSuau 1s forwards;
+    text-align: center;
 }
+
 
 @keyframes aparicioSuau {
     from {
@@ -80,4 +83,99 @@ a, #admin {
 
 a:hover, #admin:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.forms {
+    border: 1px solid rgb(49, 49, 49);
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    box-sizing: border-box;
+    animation: aparicioSuau 1s forwards;
+}
+
+/* NUEVOS ESTILOS para hacer más bonito */
+label {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: 0.3s;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #6a88e5;
+    box-shadow: 0 0 8px #6a88e5;
+}
+
+/* Mantengo tus botones existentes */
+button {
+    height: 50px;
+    width: 200px;
+    position: relative;
+    background-color: transparent;
+    cursor: pointer;
+    border: 2px solid #252525;
+    overflow: hidden;
+    border-radius: 30px;
+    color: #333;
+    transition: all 0.5s ease-in-out;
+    margin: 20px auto;
+    display: block;
+}
+
+.btn-txt {
+    z-index: 1;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+.type1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.5s ease-in-out;
+    background-color: #333;
+    border-radius: 30px;
+    visibility: hidden;
+    height: 10px;
+    width: 10px;
+    z-index: -1;
+}
+
+.button:hover {
+    box-shadow: 1px 1px 200px #252525;
+    color: #fff;
+    border: none;
+}
+
+.type1:hover::after {
+    visibility: visible;
+    transform: scale(100) translateX(2px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .forms {
+        width: 90%;
+        margin-left: 5vw;
+    }
+}
+.subtitol {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
 }
