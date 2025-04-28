@@ -14,7 +14,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./php:/var/www/html
+      - ./Incidencies:/var/www/html
     environment:
       VAR1: "sóc una pera i estic al docker-compose"
       VAR2: ${VAR2}
