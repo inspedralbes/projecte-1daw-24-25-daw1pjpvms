@@ -123,6 +123,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <h1 class= "bigtitol"> Formulari d'incidencies</h1>
       <a href="llistat.php" class="boto">Area de gestions</a> 
     </div>
+    
+    <script>
+    // Función para añadir la incidencia a la lista y guardarla en la base de datos
+    function añadirIncidencia() {
+        const titulo = document.getElementById('titulo').value;
+        const descripcion = document.getElementById('descripcion').value;
+
+        // Validación simple
+        if (titulo && descripcion) {
+            // Crear una petición AJAX
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'guardar_incidencia.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // Enviar los datos al servidor
+            xhr.send('titulo=' + encodeURIComponent(titulo) + '&descripcion=' + encodeURIComponent(descripcion));
+
+            // Cuando la petición se complete
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    alert(xhr.responseText); // Muestra el mensaje de éxito
+                    // Añadir la incidencia a la lista
+                    const li = document.createElement('li');
+                    li.textContent = `Títol: ${titulo} - Descripció: ${descripcion}`;
+                    document.getElementById('listaIncidencias').appendChild(li);
+
+                    // Limpiar los campos después de añadir
+                    document.getElementById('titulo').value = '';
+                    document.getElementById('descripcion').value = '';
+                } else {
+                    alert('Error al guardar la incidència');
+                }
+            };
+        } else {
+            alert('Per favor, completa tots els camps.');
+        }
+    }
+</script>
+
     <?php
 
     if ($errors == 0) {
