@@ -114,7 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estilos.css">
-    <link rel="stylesheet" href="estilos2.css">
     <title>Document</title>
 </head>
 
@@ -153,28 +152,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             <h1> </h1>
 
             <form action="" method="post">
-                <?php
+    <?php
+    if ($errors > 0) {
+        echo "<div class='error'>ATENCIÓ: Hi ha $errors errors en el formulari </div>";
+    }
+    ?>
+    <label for="fname">Nom: <span class="boto"><?php echo $nomErr; ?></span></label>
+    <input type="text" id="fname" name="fname" placeholder="El teu nom" value="<?php echo $nom; ?>">
 
-                if ($errors > 0) {
-                    echo "<div class='error'>ATENCIÓ: Hi ha $errors errors en el formulari </div>";
-                }
-                ?>
-                <label for="fname">Nom: <span class="boto"> <?php echo $nomErr; ?> </span></label>
+    <label for="femail">Correu electronic: <span class="boto"><?php echo $emailErr; ?></span></label>
+    <input type="email" id="femail" name="femail" placeholder="Correu@usuari" value="<?php echo $email; ?>">
 
-                <input type="text" id="fname" name="fname" placeholder="El teu nom" value="<?php echo $nom; ?>">
+    <input type="hidden" name="id" value="<?php echo $id; ?>">
 
-                <label for="femail"> Correu electronic: <span class="boto"> <?php echo $emailErr; ?> </span></label> </label>
+    <button class="button type1" type="submit">
+        <span class="btn-txt">Envia</span>
+    </button>
+</form>
 
-                <input type="email" id="femail" name="femail" placeholder="Correu@usuari" value="<?php echo $email; ?>">
-
-
-                
-
-                <button class="button type1" type="submit">
-                <span class="btn-txt">Login</span>
-                <input type="hidden" name="id" value="<?php echo $id; ?>">
-                
-            </form>
            
         <?php
     }
