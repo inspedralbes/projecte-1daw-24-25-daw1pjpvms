@@ -96,7 +96,7 @@ a:hover, #admin:hover {
     animation: aparicioSuau 1s forwards;
 }
 
-/* NUEVOS ESTILOS para hacer más bonito */
+
 label {
     font-size: 18px;
     margin-bottom: 10px;
@@ -120,7 +120,6 @@ input[type="text"]:focus {
     box-shadow: 0 0 8px #6a88e5;
 }
 
-/* Mantengo tus botones existentes */
 button {
     height: 50px;
     width: 200px;
@@ -167,7 +166,7 @@ button {
     transform: scale(100) translateX(2px);
 }
 
-/* Responsive */
+
 @media (max-width: 600px) {
     .forms {
         width: 90%;

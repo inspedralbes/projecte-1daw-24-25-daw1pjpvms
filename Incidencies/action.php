@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $id = $_GET['id'];
             $nom = $row["nom"];
             $email = $row["mail"];
-            $cicles = $row["cicles"];
+        
         } else {
             $errors = 1;
             $nomErr = "No s'ha trobat cap persona amb l'id $_GET[id]";
@@ -114,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="estilos2.css">
     <title>Document</title>
 </head>
 
@@ -121,47 +122,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 <div class="banner"> 
     <h1 class= "bigtitol"> Formulari d'incidencies</h1>
-      <a href="llistat.php" class="boto">Area de gestions</a> 
+       
     </div>
     
-    <script>
-    // Función para añadir la incidencia a la lista y guardarla en la base de datos
-    function añadirIncidencia() {
-        const titulo = document.getElementById('titulo').value;
-        const descripcion = document.getElementById('descripcion').value;
-
-        // Validación simple
-        if (titulo && descripcion) {
-            // Crear una petición AJAX
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'guardar_incidencia.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            // Enviar los datos al servidor
-            xhr.send('titulo=' + encodeURIComponent(titulo) + '&descripcion=' + encodeURIComponent(descripcion));
-
-            // Cuando la petición se complete
-            xhr.onload = function() {
-                if (xhr.status == 200) {
-                    alert(xhr.responseText); // Muestra el mensaje de éxito
-                    // Añadir la incidencia a la lista
-                    const li = document.createElement('li');
-                    li.textContent = `Títol: ${titulo} - Descripció: ${descripcion}`;
-                    document.getElementById('listaIncidencias').appendChild(li);
-
-                    // Limpiar los campos después de añadir
-                    document.getElementById('titulo').value = '';
-                    document.getElementById('descripcion').value = '';
-                } else {
-                    alert('Error al guardar la incidència');
-                }
-            };
-        } else {
-            alert('Per favor, completa tots els camps.');
-        }
-    }
-</script>
-
+    
     <?php
 
     if ($errors == 0) {
@@ -204,19 +168,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 <input type="email" id="femail" name="femail" placeholder="Correu@usuari" value="<?php echo $email; ?>">
 
 
-                <label for="curs"> Selecciona el curs en el que estas interessat:</label>
+                
 
-                <select name="curs" id="curs">
-                    <option value="daw" <?php if (isset($cicles) && $cicles == "daw") echo "selected"; ?>>Daw</option>
-                    <option value="dam" <?php if (isset($cicles) && $cicles == "dam") echo "selected"; ?>>Dam</option>
-                    <option value="smx" <?php if (isset($cicles) && $cicles == "smx") echo "selected"; ?>>SMX</option>
-                    <option value="asix" <?php if (isset($cicles) && $cicles == "asix") echo "selected"; ?>>ASIX</option>
-                </select>
-
-                <input type="submit" value="Login" class="sub">
-
-
-
+                <button class="button type1" type="submit">
+                <span class="btn-txt">Login</span>
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                 
             </form>
