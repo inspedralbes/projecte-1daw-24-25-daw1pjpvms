@@ -49,7 +49,7 @@ $dbname = "a24pauvermac_daw";
 
   ?>
 
-  <a href="action.php">Tornar al inici</a>
+  <a href="index.html ">Tornar al inici</a>
   </div>
 
 

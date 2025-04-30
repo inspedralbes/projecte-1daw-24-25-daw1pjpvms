@@ -111,22 +111,20 @@ a.boto{
 
 }
 
-.banner{
+.banner {
     background-color: #424344;
     position: fixed;
-    top: 5px;
+    top: 0;
     height: 11%;
     width: 100%;
+    display: flex;
+    align-items: center;
     box-shadow: none;
-    
-   
 }
 
-.bigtitol{
-color: rgb(233, 233, 233);
-width: 40%;
-text-align: left;
-margin-left: 3%;
+.bigtitol {
+    color: rgb(233, 233, 233);
+    margin-left: 3%;
 }
 
 button {
@@ -195,7 +193,7 @@ button {
         margin-left: 5vw;
     }
 }
-input[type="text"],[type="email"]{
+.insert{
     width: 100%;
     padding: 12px 20px;
     margin-bottom: 20px;
