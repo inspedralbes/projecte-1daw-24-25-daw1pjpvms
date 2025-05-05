@@ -1,7 +1,7 @@
 <?php
 $servername = "db";
 $username = "usuari";
-$password = "user123";
+$password = "paraula_de_pas";
 $dbname = "a24pauvermac_incidencies";
 
 $departament = $_POST['departament'] ?? '';
@@ -99,10 +99,12 @@ function guardarIncidencia($conn, $departament, $descripcio)
             <label for="departament">Departament: <span class="boto"><?= $departamentErr ?></span></label>
             <select name="departament" id="departament">
                 <option value="">-- Selecciona un departament --</option>
-                <option value="L.cat" <?= $departament == 'L.cat' ? 'selected' : '' ?>>Llengua catalana</option>
-                <option value="Matematiques" <?= $departament == 'Matematiques' ? 'selected' : '' ?>>Matematiques</option>
                 <option value="Angles" <?= $departament == 'Angles' ? 'selected' : '' ?>>Angles</option>
                 <option value="Fisica" <?= $departament == 'Fisica' ? 'selected' : '' ?>>Fisica</option>
+                <option value="L.cat" <?= $departament == 'L.cat' ? 'selected' : '' ?>>Llengua catalana</option>
+                <option value="Matematiques" <?= $departament == 'Matematiques' ? 'selected' : '' ?>>Matematiques</option>
+                
+               
             </select>
 
             <label for="descripcio">Descripció de la incidència (màx. 200 caràcters): <span class="boto"><?= $descripcioErr ?></span></label>
