@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de dades: `a24pauvermac_incidencies`
 --
-CREATE DATABASE IF NOT EXISTS 24pauvermac_incidencies
+CREATE DATABASE IF NOT EXISTS a24pauvermac_incidencies
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 -- --------------------------------------------------------
@@ -29,14 +29,16 @@ CREATE DATABASE IF NOT EXISTS 24pauvermac_incidencies
 -- Estructura de la taula `INCIDENCIA`
 --
 
+GRANT ALL PRIVILEGES ON a24pauvermac_incidencies.* TO 'usuari'@'%';
+FLUSH PRIVILEGES;
+
 CREATE TABLE `INCIDENCIA` (
   `Dept` enum('L.cat','Matematiques','Angles','Fisica') NOT NULL,
   `Descripcio` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-GRANT ALL PRIVILEGES ON a24pauvermac_incidencies.* TO 'usuari'@'%';
-FLUSH PRIVILEGES;
+
 
 
 -- Després de crear la base de dades, cal seleccionar-la per treballar-hi

@@ -1,5 +1,5 @@
 <?php
 $servername = "db";
 $username = "usuari";
-$password = "user123";
+$password = "paraula_de_pass";
 $dbname = "a24pauvermac_incidencies";
