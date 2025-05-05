@@ -1,7 +1,7 @@
 <?php
 $servername = "db";
 $username = "usuari";
-$password = "paraula_de_pass";
+$password = "paraula_de_pas";
 $dbname = "a24pauvermac_incidencies";
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {

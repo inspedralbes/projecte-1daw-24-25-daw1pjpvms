@@ -1,6 +1,6 @@
 <?php
 
-require "connexio.php";
+require "conexio.php";
 
 $departament = $_POST['departament'] ?? '';
 $descripcio = $_POST['descripcio'] ?? '';
