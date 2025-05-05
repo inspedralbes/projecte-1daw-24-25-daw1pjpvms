@@ -1,41 +1,71 @@
--- Aquest script NOMÉS s'executa la primera vegada que es crea el contenidor.
--- Si es vol recrear les taules de nou cal esborrar el contenidor, o bé les dades del contenidor
--- és a dir, 
--- esborrar el contingut de la carpeta db_data 
--- o canviant el nom de la carpeta, però atenció a no pujar-la a git
+-- phpMyAdmin SQL Dump
+-- version 5.2.2
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: localhost:3306
+-- Temps de generació: 05-05-2025 a les 08:40:28
+-- Versió del servidor: 10.11.10-MariaDB-ubu2204
+-- Versió de PHP: 8.2.26
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
--- És un exemple d'script per crear una base de dades i una taula
--- i afegir-hi dades inicials
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
--- Si creem la BBDD aquí podem control·lar la codificació i el collation
--- en canvi en el docker-compose no podem especificar el collation ni la codificació
-
--- Per assegurar-nes de que la codificació dels caràcters d'aquest script és la correcta
-SET NAMES utf8mb4;
-
-CREATE DATABASE IF NOT EXISTS persones
+--
+-- Base de dades: `a24pauvermac_incidencies`
+--
+CREATE DATABASE IF NOT EXISTS 24pauvermac_incidencies
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
+-- --------------------------------------------------------
 
--- Donem permisos a l'usuari 'usuari' per accedir a la base de dades 'persones'
--- sinó, aquest usuari no podrà veure la base de dades i no podrà accedir a les taules
-GRANT ALL PRIVILEGES ON persones.* TO 'usuari'@'%';
+--
+-- Estructura de la taula `INCIDENCIA`
+--
+
+CREATE TABLE `INCIDENCIA` (
+  `Dept` enum('L.cat','Matematiques','Angles','Fisica') NOT NULL,
+  `Descripcio` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+GRANT ALL PRIVILEGES ON a24pauvermac_incidencies.* TO 'usuari'@'%';
 FLUSH PRIVILEGES;
 
 
 -- Després de crear la base de dades, cal seleccionar-la per treballar-hi
-USE persones;
+USE a24pauvermac_incidencies;
+-- Bolcament de dades per a la taula `INCIDENCIA`
+--
 
+INSERT INTO `INCIDENCIA` (`Dept`, `Descripcio`) VALUES
+('L.cat', 'hola'),
+('L.cat', 's'),
+('Matematiques', 'd'),
+('Matematiques', 'dfsfsd'),
+('Matematiques', 'hola'),
+('Matematiques', 'Una taula sha trencat '),
+('Fisica', 'd'),
+('Fisica', 'holahola'),
+('Fisica', 'Un ordinador no funciona');
 
-CREATE TABLE cases (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-);
+--
+-- Índexs per a les taules bolcades
+--
 
+--
+-- Índexs per a la taula `INCIDENCIA`
+--
+ALTER TABLE `INCIDENCIA`
+  ADD PRIMARY KEY (`Dept`,`Descripcio`);
+COMMIT;
 
-
--- Afegim algunes dades inicials a la taula cases
-INSERT INTO cases (name) VALUES ('Casa Milà');
-INSERT INTO cases (name) VALUES ('Casa Batlló');
-INSERT INTO cases (name) VALUES ('Casa Gaudí');
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

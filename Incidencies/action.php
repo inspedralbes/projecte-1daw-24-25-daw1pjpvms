@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "a24pauvermac_dawpaula";
-$password = "%NwAi7&0h104w|lM";
-$dbname = "a24pauvermac_daw";
+$servername = "db";
+$username = "usuari";
+$password = "user123";
+$dbname = "a24pauvermac_incidencies";
 
 $departament = $_POST['departament'] ?? '';
 $descripcio = $_POST['descripcio'] ?? '';
@@ -32,24 +32,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die("Error en la connexió amb la base de dades: " . $conn->connect_error);
         }
 
-        $data = date('Y-m-d H:i:s');
-        guardarIncidencia($conn, $departament, $descripcio, $data);
+        
+        guardarIncidencia($conn, $departament, $descripcio);
 
         echo "<div class='phpcuadre'><h1>Incidència registrada correctament</h1>";
+        echo "<p>Les dades guardades son:</p>";
         echo "<p><strong>Departament:</strong> $departament</p>";
         echo "<p><strong>Descripció:</strong> $descripcio</p>";
         echo "<p><a href='./'>Tornar a la pàgina principal</a></p>";
         echo "</div>";
 
-        exit;
+        die;
     }
 }
 
-function guardarIncidencia($conn, $departament, $descripcio, $data)
+function guardarIncidencia($conn, $departament, $descripcio)
 {
-    $sql = "INSERT INTO incidencies (departament, descripcio, data_incidencia) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO INCIDENCIA (Dept, Descripcio) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $departament, $descripcio, $data);
+    $stmt->bind_param("ss", $departament, $descripcio);
 
     if (!$stmt->execute()) {
         die("Error en la consulta: " . $stmt->error);
@@ -98,9 +99,7 @@ function guardarIncidencia($conn, $departament, $descripcio, $data)
             <label for="departament">Departament: <span class="boto"><?= $departamentErr ?></span></label>
             <select name="departament" id="departament">
                 <option value="">-- Selecciona un departament --</option>
-                <option value="Secretearia" <?= $departament == 'Secretearia' ? 'selected' : '' ?>>Secretearia</option>
-                <option value="Consergeria" <?= $departament == 'Consergeria' ? 'selected' : '' ?>>Consergeria</option>
-                <option value="Direcio" <?= $departament == 'Direcio' ? 'selected' : '' ?>>Direció</option>
+                <option value="L.cat" <?= $departament == 'L.cat' ? 'selected' : '' ?>>Llengua catalana</option>
                 <option value="Matematiques" <?= $departament == 'Matematiques' ? 'selected' : '' ?>>Matematiques</option>
                 <option value="Angles" <?= $departament == 'Angles' ? 'selected' : '' ?>>Angles</option>
                 <option value="Fisica" <?= $departament == 'Fisica' ? 'selected' : '' ?>>Fisica</option>
