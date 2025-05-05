@@ -34,41 +34,14 @@ FLUSH PRIVILEGES;
 
 USE a24pauvermac_incidencies;
 
+DROP TABLE IF EXISTS `INCIDENCIA`;
 CREATE TABLE `INCIDENCIA` (
-  `Dept` enum('L.cat','Matematiques','Angles','Fisica') NOT NULL,
-  `Descripcio` varchar(200) NOT NULL
+  `id` int NOT NULL AUTO_INCREMENT,
+  `Dept` enum('L.cat','Matematiques','Angles','Fisica') COLLATE utf8mb4_general_ci NOT NULL,
+  `Descripcio` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`Dept`,`Descripcio`),
+  UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
-
-
-
--- Després de crear la base de dades, cal seleccionar-la per treballar-hi
--- Bolcament de dades per a la taula `INCIDENCIA`
---
-
-INSERT INTO `INCIDENCIA` (`Dept`, `Descripcio`) VALUES
-('L.cat', 'hola'),
-('L.cat', 's'),
-('Matematiques', 'd'),
-('Matematiques', 'dfsfsd'),
-('Matematiques', 'hola'),
-('Matematiques', 'Una taula sha trencat '),
-('Fisica', 'd'),
-('Fisica', 'holahola'),
-('Fisica', 'Un ordinador no funciona');
-
---
--- Índexs per a les taules bolcades
---
-
---
--- Índexs per a la taula `INCIDENCIA`
---
-ALTER TABLE `INCIDENCIA`
-  ADD PRIMARY KEY (`Dept`,`Descripcio`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO `INCIDENCIA` (`id`, `Dept`, `Descripcio`) VALUES
+(1,	'Matematiques',	'tyrtyry');

@@ -1,8 +1,5 @@
 <?php
-$servername = "db";
-$username = "usuari";
-$password = "paraula_de_pas";
-$dbname = "a24pauvermac_incidencies";
+require "conexio.php";
 ?>
 <!DOCTYPE html>
 <html lang="ca">
@@ -18,10 +15,6 @@ $dbname = "a24pauvermac_incidencies";
 <body>
 
   <?php
-  $conn = new mysqli($servername, $username, $password, $dbname);
-  if ($conn->connect_error) {
-      die("Error en la connexió amb la base de dades: " . $conn->connect_error);
-  }
 
   $sql = "SELECT Dept, Descripcio FROM INCIDENCIA";
 

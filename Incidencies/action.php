@@ -1,8 +1,6 @@
 <?php
-$servername = "db";
-$username = "usuari";
-$password = "paraula_de_pas";
-$dbname = "a24pauvermac_incidencies";
+
+require "connexio.php";
 
 $departament = $_POST['departament'] ?? '';
 $descripcio = $_POST['descripcio'] ?? '';
@@ -27,10 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if ($errors == 0) {
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        if ($conn->connect_error) {
-            die("Error en la connexió amb la base de dades: " . $conn->connect_error);
-        }
 
         
         guardarIncidencia($conn, $departament, $descripcio);
