@@ -32,6 +32,8 @@ CREATE DATABASE IF NOT EXISTS a24pauvermac_incidencies
 GRANT ALL PRIVILEGES ON a24pauvermac_incidencies.* TO 'usuari'@'%';
 FLUSH PRIVILEGES;
 
+USE a24pauvermac_incidencies;
+
 CREATE TABLE `INCIDENCIA` (
   `Dept` enum('L.cat','Matematiques','Angles','Fisica') NOT NULL,
   `Descripcio` varchar(200) NOT NULL
@@ -42,7 +44,6 @@ CREATE TABLE `INCIDENCIA` (
 
 
 -- Després de crear la base de dades, cal seleccionar-la per treballar-hi
-USE a24pauvermac_incidencies;
 -- Bolcament de dades per a la taula `INCIDENCIA`
 --
 
