@@ -41,6 +41,10 @@ CREATE TABLE `ESTAT` (
   PRIMARY KEY (`cod_estat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `ESTAT` (`cod_estat`, `nom`) VALUES
+(1,	'En espera'),
+(2,	'Revisant'),
+(3,	'Solucionada');
 
 DROP TABLE IF EXISTS `INCIDENCIA`;
 CREATE TABLE `INCIDENCIA` (
