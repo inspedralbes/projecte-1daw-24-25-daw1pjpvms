@@ -34,14 +34,23 @@ FLUSH PRIVILEGES;
 
 USE a24pauvermac_incidencies;
 
+DROP TABLE IF EXISTS `ESTAT`;
+CREATE TABLE `ESTAT` (
+  `cod_estat` int NOT NULL,
+  `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`cod_estat`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 DROP TABLE IF EXISTS `INCIDENCIA`;
 CREATE TABLE `INCIDENCIA` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `Dept` enum('L.cat','Matematiques','Angles','Fisica') COLLATE utf8mb4_general_ci NOT NULL,
-  `Descripcio` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`Dept`,`Descripcio`),
-  UNIQUE KEY `id` (`id`)
+  `Dept` enum('L.cat','Matematiques','Angles','Fisica') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Descripcio` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Data` datetime NOT NULL,
+  `cod_estat` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cod_estat` (`cod_estat`),
+  CONSTRAINT `INCIDENCIA_ibfk_1` FOREIGN KEY (`cod_estat`) REFERENCES `ESTAT` (`cod_estat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `INCIDENCIA` (`id`, `Dept`, `Descripcio`) VALUES
-(1,	'Matematiques',	'tyrtyry');

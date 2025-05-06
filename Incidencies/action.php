@@ -7,6 +7,8 @@ $descripcio = $_POST['descripcio'] ?? '';
 $departamentErr = '';
 $descripcioErr = '';
 $errors = -1;
+$data = date('Y-m-d H:i:s');
+$estat = 1;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = 0;
@@ -27,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($errors == 0) {
 
         
-        guardarIncidencia($conn, $departament, $descripcio);
+        guardarIncidencia($conn, $departament, $descripcio,$data, $estat);
 
         echo "<div class='phpcuadre'><h1>Incidència registrada correctament</h1>";
         echo "<p>Les dades guardades son:</p>";
@@ -40,11 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-function guardarIncidencia($conn, $departament, $descripcio)
+function guardarIncidencia($conn, $departament, $descripcio, $data, $estat)
 {
-    $sql = "INSERT INTO INCIDENCIA (Dept, Descripcio) VALUES (?, ?)";
+    $sql = "INSERT INTO INCIDENCIA (Dept, Descripcio, Data, cod_estat) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $departament, $descripcio);
+    $stmt->bind_param("ssss", $departament, $descripcio, $data, $estat);
 
     if (!$stmt->execute()) {
         die("Error en la consulta: " . $stmt->error);
