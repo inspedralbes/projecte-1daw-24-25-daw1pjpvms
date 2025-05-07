@@ -45,13 +45,18 @@ require "conexio.php";
     if ($result->num_rows > 0) {
         echo "<h1 style='text-align:center;'>Llistat d'incidències</h1>";
         echo "<table>";
-        echo "<tr><th>Departament</th><th>Descripció</th><th>Estat</th></tr>";
+        echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th><th>Opcions</th></tr>";
         while ($row = $result->fetch_assoc()) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
             echo "<tr>";
+            echo "<td> Nada por ahora</td>";  
             echo "<td>" . htmlspecialchars($row["Dept"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
+            echo "<td> Nada por ahora</td>";
+            echo "<td> Nada por ahora</td>";
+            echo "<td> Nada por ahora</td>";
             echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
+            echo "<td> <a href='llistat.php' id='admin'>Editar</a></td>";
             echo "</tr>";
         }
         echo "</table>";
