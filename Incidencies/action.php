@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 function guardarIncidencia($conn, $departament, $descripcio, $data, $estat)
 {
-    $sql = "INSERT INTO INCIDENCIA (Dept, Descripcio, Data, cod_estat) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO INCIDENCIA (cod_dept, Descripcio, Data, cod_estat) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssss", $departament, $descripcio, $data, $estat);
 
@@ -95,10 +95,10 @@ function guardarIncidencia($conn, $departament, $descripcio, $data, $estat)
             <label for="departament">Departament: <span class="boto"><?= $departamentErr ?></span></label>
             <select name="departament" id="departament">
                 <option value="">-- Selecciona un departament --</option>
-                <option value="Angles" <?= $departament == 'Angles' ? 'selected' : '' ?>>Angles</option>
-                <option value="Fisica" <?= $departament == 'Fisica' ? 'selected' : '' ?>>Fisica</option>
-                <option value="L.cat" <?= $departament == 'L.cat' ? 'selected' : '' ?>>Llengua catalana</option>
-                <option value="Matematiques" <?= $departament == 'Matematiques' ? 'selected' : '' ?>>Matematiques</option>
+                <option value="1" <?= $departament == '1' ? 'selected' : '' ?>>Angles</option>
+                <option value="2" <?= $departament == '2' ? 'selected' : '' ?>>Fisica</option>
+                <option value="3" <?= $departament == '3' ? 'selected' : '' ?>>Llengua catalana</option>
+                <option value="4" <?= $departament == '4' ? 'selected' : '' ?>>Matematiques</option>
                 
                
             </select>
