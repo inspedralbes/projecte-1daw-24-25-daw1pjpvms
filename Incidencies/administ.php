@@ -3,27 +3,24 @@ require "conexio.php";
 
 $id = $_POST['id'] ?? null;
 $incidencia = null;
-$tecnic = 0;
-$prori = null;
-$estat = 0;
-$uptecnic = 0;
-$upprori = 0;
-$upestat = 0;
-$modif = 0;
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && $modif > 0) {
-    $tecnic = $_POST['tecnic'] ?? '0';
-    $prori = $_POST['proritat'] ?? 'Sense asignar';
-    $estat = $_POST['estat'] ?? '1';
+$tecnic = $_POST['tecnic'] ?? null;
+$prori = $_POST['proritat'] ?? null;  
+$estat = $_POST['estat'] ?? null;
 
-   if ($uptecnic>0){
-    actualitzarTecnic($conn, $id, $tecnic);
-   } 
-   if ($upprori>0){
-    actualitzarPrioritat($conn, $id, $prioritat);
-   } 
-   if ($upestat>0){
-    actualitzarEstat($conn, $id, $estat);
-   } 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+   
+   
+    if (isset($tecnic) && $tecnic !== "") {
+        actualitzarTecnic($conn, $id, $tecnic);
+    }    
+
+    if (!empty($prori)) {
+        actualitzarPrioritat($conn, $id, $prori);
+    }
+
+    if (!empty($estat)) {
+        actualitzarEstat($conn, $id, $estat);  
+    }
    
 }
 
@@ -40,12 +37,12 @@ function actualitzarTecnic($conn, $id, $tecnic) {
     if (!$stmt->execute()) {
         echo "<p style='color:red;'>Error al modificar tècnic: " . $stmt->error . "</p>";
     }
-    $uptecnic = 1;
-    $modif = 1;
+    
+   
     $stmt->close();
 }
 
-function actualitzarPrioritat($conn, $id, $prioritat) {
+function actualitzarPrioritat($conn, $id, $prori) {
     $sql = "UPDATE INCIDENCIA SET prioritat = ? WHERE Id = ?";
     $stmt = $conn->prepare($sql);
 
@@ -53,13 +50,13 @@ function actualitzarPrioritat($conn, $id, $prioritat) {
         die("Error en preparar la consulta: " . $conn->error);
     }
 
-    $stmt->bind_param("si", $prioritat, $id);
+    $stmt->bind_param("si", $prori, $id);
 
     if (!$stmt->execute()) {
         echo "<p style='color:red;'>Error al modificar prioritat: " . $stmt->error . "</p>";
     }
-    $upprori = 1;
-    $modif = 1;
+
+
     $stmt->close();
 }
 
@@ -76,8 +73,8 @@ function actualitzarEstat($conn, $id, $estat) {
     if (!$stmt->execute()) {
         echo "<p style='color:red;'>Error al modificar estat: " . $stmt->error . "</p>";
     }
-    $upestat = 1;
-    $modif = 1;
+   
+
     $stmt->close();
 }
 
@@ -221,9 +218,12 @@ function llegirIncidencies($conn, $id) {
                
            
             <button type='submit' class='edit-btn'>Enviar canvis</button>
+            <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
+
             </div>
         </form>
-
+        <p><a href='./'>Tornar a la pàgina principal</a></p>
+        <a href="llistat.php">Espai de control</a>
 
 </body>
 </html>
