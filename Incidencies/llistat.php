@@ -57,8 +57,16 @@ require "conexio.php";
             echo "<td>" . htmlspecialchars($row["cod_tecnic"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
             echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
-            echo "<td> <a href='llistat.php' id='admin'>Editar</a></td>";
+          
+  echo "<td>
+  <form action='administ.php' method='post'>
+    <input type='hidden' name='id' value='" . htmlspecialchars($row['Id']) . "'>
+    <button type='submit' class='edit-btn'>Editar</button>
+  </form>
+</td>";
+
             echo "</tr>";
+            
         }
         echo "</table>";
     } else {
