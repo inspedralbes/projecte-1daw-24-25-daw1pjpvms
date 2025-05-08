@@ -69,6 +69,7 @@ CREATE TABLE `TECNICS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `TECNICS` (`cod_tecnic`, `nom`, `cod_proj`) VALUES
+(0, 'Sense asignar', NULL),
 (1, 'Roberto', NULL),
 (2, 'Marta', NULL),
 (3, 'Anna', NULL);
@@ -80,7 +81,7 @@ CREATE TABLE `INCIDENCIA` (
   `Data` datetime NOT NULL,
   `cod_estat` int NOT NULL,
   `cod_tecnic` int NOT NULL,
-  `prioritat` enum('Crítica','Alta','Moderada','Baixa') COLLATE utf8mb4_general_ci NOT NULL,
+  `prioritat` enum('Sense asignar','Crítica','Alta','Moderada','Baixa') COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `cod_estat` (`cod_estat`),
   KEY `cod_tecnic` (`cod_tecnic`),

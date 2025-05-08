@@ -47,11 +47,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
   function llegirConsulta($conn, $codi) {
 
-    $sql = "SELECT Dept, Descripcio, cod_estat FROM INCIDENCIA WHERE Id =$codi";
+    $sql = "SELECT cod_dept, Descripcio, cod_estat FROM INCIDENCIA WHERE Id =$codi";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt->execute()) {
         die("Error executing statement: " . $stmt->error);
+    }
+    function llegirDept($conn, $codi_dept) {
+      $sql = "SELECT nom FROM DEPARTAMENT WHERE cod_dept = ?";
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("i", $codi_dept);
+  
+      if (!$stmt->execute()) {
+          die("Error executing statement: " . $stmt->error);
+      }
+  
+      $result = $stmt->get_result();
+      if ($row = $result->fetch_assoc()) {
+          return $row["nom"];
+      } else {
+          return "Desconegut";
+      }
     }
 
     $result = $stmt->get_result();
@@ -62,8 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<tr><th>Departament</th><th>Descripció</th><th>Estat</th></tr>";
         while ($row = $result->fetch_assoc()) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
+            $nomDept = llegirDept($conn, $row["cod_dept"]);
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["Dept"]) . "</td>";
+            echo "<td>" . htmlspecialchars($nomDept) . "</td>";
             echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
             echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
             echo "</tr>";

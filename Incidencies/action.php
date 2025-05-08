@@ -9,6 +9,9 @@ $descripcioErr = '';
 $errors = -1;
 $data = date('Y-m-d H:i:s');
 $estat = 1;
+$codtec = 0;
+$proritat = 'Sense asignar';
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = 0;
@@ -29,12 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($errors == 0) {
 
         
-        guardarIncidencia($conn, $departament, $descripcio,$data, $estat);
-
+        guardarIncidencia($conn, $departament, $descripcio, $data, $estat, $codtec, $proritat);
+        $idllegit = llegirId($conn, $data);
         echo "<div class='phpcuadre'><h1>Incidència registrada correctament</h1>";
         echo "<p>Les dades guardades son:</p>";
         echo "<p><strong>Departament:</strong> $departament</p>";
         echo "<p><strong>Descripció:</strong> $descripcio</p>";
+        echo "<p><strong>ID de consulta:</strong> $idllegit</p>";
+
         echo "<p><a href='./'>Tornar a la pàgina principal</a></p>";
         echo "</div>";
 
@@ -42,11 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-function guardarIncidencia($conn, $departament, $descripcio, $data, $estat)
+function guardarIncidencia($conn, $departament, $descripcio, $data, $estat, $codtec, $proritat)
 {
-    $sql = "INSERT INTO INCIDENCIA (cod_dept, Descripcio, Data, cod_estat) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO INCIDENCIA (cod_dept, Descripcio, Data, cod_estat,cod_tecnic,prioritat) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $departament, $descripcio, $data, $estat);
+    $stmt->bind_param("sssiis", $departament, $descripcio, $data, $estat, $codtec, $proritat );
 
     if (!$stmt->execute()) {
         die("Error en la consulta: " . $stmt->error);
@@ -54,6 +59,25 @@ function guardarIncidencia($conn, $departament, $descripcio, $data, $estat)
 
     $stmt->close();
 }
+function llegirId($conn, $data)
+{
+    $sql = "SELECT Id FROM INCIDENCIA WHERE Data = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $data);
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        return $row["Id"];
+    } else {
+        return "000";
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +89,7 @@ function guardarIncidencia($conn, $departament, $descripcio, $data, $estat)
     <style>
         textarea {
             width: 100%;
-            resize: none; /* No se puede redimensionar */
+            resize: none; 
             padding: 8px;
             font-size: 1em;
             box-sizing: border-box;

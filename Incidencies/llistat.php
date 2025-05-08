@@ -33,7 +33,7 @@ require "conexio.php";
   llegirIncidencies($conn);
 
   function llegirIncidencies($conn) {
-    $sql = "SELECT Dept, Descripcio, cod_estat FROM INCIDENCIA";
+    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt->execute()) {
@@ -48,13 +48,14 @@ require "conexio.php";
         echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th><th>Opcions</th></tr>";
         while ($row = $result->fetch_assoc()) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
+            $LlegirDept = llegirDept($conn, $row["cod_dept"]);
             echo "<tr>";
-            echo "<td> Nada por ahora</td>";  
-            echo "<td>" . htmlspecialchars($row["Dept"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>"; 
+            echo "<td>" . htmlspecialchars($LlegirDept) . "</td>";
             echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
-            echo "<td> Nada por ahora</td>";
-            echo "<td> Nada por ahora</td>";
-            echo "<td> Nada por ahora</td>";
+            echo "<td>" . htmlspecialchars($row["Data"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["cod_tecnic"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
             echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
             echo "<td> <a href='llistat.php' id='admin'>Editar</a></td>";
             echo "</tr>";
@@ -69,6 +70,22 @@ require "conexio.php";
     $sql = "SELECT nom FROM ESTAT WHERE cod_estat = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $codi_estat);
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        return $row["nom"];
+    } else {
+        return "Desconegut";
+    }
+  }
+  function llegirDept($conn, $codi_dept) {
+    $sql = "SELECT nom FROM DEPARTAMENT WHERE cod_dept = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $codi_dept);
 
     if (!$stmt->execute()) {
         die("Error executing statement: " . $stmt->error);
