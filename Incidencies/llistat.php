@@ -1,5 +1,6 @@
 <?php
 require "conexio.php";
+include "funciones.php";
 ?>
 <!DOCTYPE html>
 <html lang="ca">
@@ -30,82 +31,7 @@ require "conexio.php";
 
   <?php
 
-  llegirIncidencies($conn);
-
-  function llegirIncidencies($conn) {
-    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA WHERE cod_estat IN('1','2')";
-    $stmt = $conn->prepare($sql);
-
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        echo "<h1 style='text-align:center;'>Llistat d'incidències</h1>";
-        echo "<table>";
-        echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th><th>Opcions</th></tr>";
-        while ($row = $result->fetch_assoc()) {
-            $nomEstat = llegirEstat($conn, $row["cod_estat"]);
-            $LlegirDept = llegirDept($conn, $row["cod_dept"]);
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>"; 
-            echo "<td>" . htmlspecialchars($LlegirDept) . "</td>";
-            echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["Data"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["cod_tecnic"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
-            echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
-          
-  echo "<td>
-  <form action='administ.php' method='post'>
-    <input type='hidden' name='id' value='" . htmlspecialchars($row['Id']) . "'>
-    <button type='submit' class='edit-btn'>Editar</button>
-  </form>
-</td>";
-
-            echo "</tr>";
-            
-        }
-        echo "</table>";
-    } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
-    }
-  }
-
-  function llegirEstat($conn, $codi_estat) {
-    $sql = "SELECT nom FROM ESTAT WHERE cod_estat = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $codi_estat);
-
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        return $row["nom"];
-    } else {
-        return "Desconegut";
-    }
-  }
-  function llegirDept($conn, $codi_dept) {
-    $sql = "SELECT nom FROM DEPARTAMENT WHERE cod_dept = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $codi_dept);
-
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        return $row["nom"];
-    } else {
-        return "Desconegut";
-    }
-  }
+  llegirIncidenciesllista($conn);
 
   $conn->close();
   ?>

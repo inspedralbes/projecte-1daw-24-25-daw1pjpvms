@@ -23,75 +23,10 @@
   </style>
 <?php
 require "conexio.php";
+include "funciones.php";
 
 $codi = $_POST['codi'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  
-  
-  
-  function llegirEstat($conn, $codi_estat) {
-    $sql = "SELECT nom FROM ESTAT WHERE cod_estat = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $codi_estat);
-
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        return $row["nom"];
-    } else {
-        return "Desconegut";
-    }
-  }
-  function llegirConsulta($conn, $codi) {
-
-    $sql = "SELECT cod_dept, Descripcio, cod_estat FROM INCIDENCIA WHERE Id =$codi";
-    $stmt = $conn->prepare($sql);
-
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-    function llegirDept($conn, $codi_dept) {
-      $sql = "SELECT nom FROM DEPARTAMENT WHERE cod_dept = ?";
-      $stmt = $conn->prepare($sql);
-      $stmt->bind_param("i", $codi_dept);
-  
-      if (!$stmt->execute()) {
-          die("Error executing statement: " . $stmt->error);
-      }
-  
-      $result = $stmt->get_result();
-      if ($row = $result->fetch_assoc()) {
-          return $row["nom"];
-      } else {
-          return "Desconegut";
-      }
-    }
-
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        echo "<h1 style='text-align:center;'>Estat de la teva consulta</h1>";
-        echo "<table>";
-        echo "<tr><th>Departament</th><th>Descripció</th><th>Estat</th></tr>";
-        while ($row = $result->fetch_assoc()) {
-            $nomEstat = llegirEstat($conn, $row["cod_estat"]);
-            $nomDept = llegirDept($conn, $row["cod_dept"]);
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($nomDept) . "</td>";
-            echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
-            echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-          
-
-    } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
-    }
-  }
 
   llegirConsulta($conn, $codi);
   die;

@@ -1,6 +1,7 @@
 <?php
 
 require "conexio.php";
+include "funciones.php";
 
 $departament = $_POST['departament'] ?? '';
 $descripcio = $_POST['descripcio'] ?? '';
@@ -47,35 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-function guardarIncidencia($conn, $departament, $descripcio, $data, $estat, $codtec, $proritat)
-{
-    $sql = "INSERT INTO INCIDENCIA (cod_dept, Descripcio, Data, cod_estat,cod_tecnic,prioritat) VALUES (?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssiis", $departament, $descripcio, $data, $estat, $codtec, $proritat );
 
-    if (!$stmt->execute()) {
-        die("Error en la consulta: " . $stmt->error);
-    }
-
-    $stmt->close();
-}
-function llegirId($conn, $data)
-{
-    $sql = "SELECT Id FROM INCIDENCIA WHERE Data = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $data);
-
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        return $row["Id"];
-    } else {
-        return "000";
-    }
-}
 
 
 ?>

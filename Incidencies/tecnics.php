@@ -1,5 +1,6 @@
 <?php
 require "conexio.php";
+include "funciones.php";
 
 $id = $_POST['id'] ?? null;
 $incidencia = null;
@@ -17,101 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
-function actualitzarEstat($conn, $id, $estat) {
-    $sql = "UPDATE INCIDENCIA SET cod_estat = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-
-    if (!$stmt) {
-        die("Error en preparar la consulta: " . $conn->error);
-    }
-
-    $stmt->bind_param("ii", $estat, $id);
-
-    if (!$stmt->execute()) {
-        echo "<p style='color:red;'>Error al modificar estat: " . $stmt->error . "</p>";
-    }
-   
-
-    $stmt->close();
-}
-
-
-function llegirEstat($conn, $codi_estat) {
-    $sql = "SELECT nom FROM ESTAT WHERE cod_estat = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $codi_estat);
-
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        return $row["nom"];
-    } else {
-        return "Desconegut";
-    }
-  }
-  function llegirDept($conn, $codi_dept) {
-    $sql = "SELECT nom FROM DEPARTAMENT WHERE cod_dept = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $codi_dept);
-
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        return $row["nom"];
-    } else {
-        return "Desconegut";
-    }
-  }
-function llegirIncidencies($conn, $id) {
-    if ($id === null) {
-        echo "<p style='text-align:center;'>No hi ha cap ID proporcionat</p>";
-        return;
-    }
-
-    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic, prioritat 
-            FROM INCIDENCIA 
-            WHERE cod_tecnic = ? AND cod_estat IN('1','2')";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        echo "<table>";
-        echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th></tr>";
-        while ($row = $result->fetch_assoc()) {
-            $nomEstat = llegirEstat($conn, $row["cod_estat"]);
-            $LlegirDept = llegirDept($conn, $row["cod_dept"]);
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>"; 
-            echo "<td>" . htmlspecialchars($LlegirDept) . "</td>";
-            echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["Data"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["cod_tecnic"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
-            echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-    } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
-    }
-
-    $stmt->close();
-}
-
-  llegirIncidencies($conn,$id);
+  llegirIncidenciesTecnics($conn,$id);
 
 ?>
 <!DOCTYPE html>
