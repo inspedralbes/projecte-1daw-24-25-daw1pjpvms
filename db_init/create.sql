@@ -62,17 +62,18 @@ INSERT INTO `ESTAT` (`cod_estat`, `nom`) VALUES
 
 CREATE TABLE `TECNICS` (
   `cod_tecnic` int NOT NULL,
-  `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rol` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cod_proj` int DEFAULT NULL,
   PRIMARY KEY (`cod_tecnic`),
-  KEY `nom` (`nom`)
+  KEY `nom` (`rol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `TECNICS` (`cod_tecnic`, `nom`, `cod_proj`) VALUES
-(0, 'Sense asignar', NULL),
-(1, 'Roberto', NULL),
-(2, 'Marta', NULL),
-(3, 'Anna', NULL);
+INSERT INTO `TECNICS` (`cod_tecnic`, `rol`, `cod_proj`) VALUES
+(0,	'Sense asignar',	NULL),
+(1,	'Informatic',	NULL),
+(2,	'Manteniment',	NULL),
+(3,	'Multimedia',	NULL),
+(4,	'Mediador/a',	NULL);
 
 CREATE TABLE `INCIDENCIA` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -81,13 +82,13 @@ CREATE TABLE `INCIDENCIA` (
   `Data` datetime NOT NULL,
   `cod_estat` int NOT NULL,
   `cod_tecnic` int NOT NULL,
-  `prioritat` enum('Sense asignar','Crítica','Alta','Moderada','Baixa') COLLATE utf8mb4_general_ci NOT NULL,
+  `prioritat` enum('Sense asignar','Crítica','Alta','Moderada','Baixa') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `cod_estat` (`cod_estat`),
   KEY `cod_tecnic` (`cod_tecnic`),
+  KEY `INCIDENCIA_ibfk_3` (`cod_dept`),
   CONSTRAINT `INCIDENCIA_ibfk_1` FOREIGN KEY (`cod_estat`) REFERENCES `ESTAT` (`cod_estat`),
   CONSTRAINT `INCIDENCIA_ibfk_2` FOREIGN KEY (`cod_tecnic`) REFERENCES `TECNICS` (`cod_tecnic`),
   CONSTRAINT `INCIDENCIA_ibfk_3` FOREIGN KEY (`cod_dept`) REFERENCES `DEPARTAMENT` (`cod_dept`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 

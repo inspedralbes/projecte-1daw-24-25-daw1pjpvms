@@ -64,9 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <select name="tecnic" id="tecnic">
                 <option value="">-- Selecciona un tecnic --</option>
                 <option value="0" <?= $tecnic == '0' ? 'selected' : '' ?>>Sense asignar</option>
-                <option value="1" <?= $tecnic == '1' ? 'selected' : '' ?>>Roberto</option>
-                <option value="2" <?= $tecnic == '2' ? 'selected' : '' ?>>Marta</option>
-                <option value="3" <?= $tecnic == '3' ? 'selected' : '' ?>>Anna</option>
+                <option value="1" <?= $tecnic == '1' ? 'selected' : '' ?>>Informatic</option>
+                <option value="2" <?= $tecnic == '2' ? 'selected' : '' ?>>Manteniment</option>
+                <option value="3" <?= $tecnic == '3' ? 'selected' : '' ?>>Multimedia</option>
+                 <option value="3" <?= $tecnic == '3' ? 'selected' : '' ?>>Mediador/a</option>
                 
                
             </select>
