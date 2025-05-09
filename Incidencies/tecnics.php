@@ -8,60 +8,17 @@ $prori = $_POST['proritat'] ?? null;
 $estat = $_POST['estat'] ?? null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+   $id = htmlspecialchars(trim($_POST['id']));
    
-   
-    if (isset($tecnic) && $tecnic !== "") {
-        actualitzarTecnic($conn, $id, $tecnic);
-    }    
-
-    if (!empty($prori)) {
-        actualitzarPrioritat($conn, $id, $prori);
-    }
-
     if (!empty($estat)) {
         actualitzarEstat($conn, $id, $estat);  
     }
-   
+
 }
 
-function actualitzarTecnic($conn, $id, $tecnic) {
-    $sql = "UPDATE INCIDENCIA SET cod_tecnic = ? WHERE Id = ?";
-    $stmt = $conn->prepare($sql);
-
-    if (!$stmt) {
-        die("Error en preparar la consulta: " . $conn->error);
-    }
-
-    $stmt->bind_param("si", $tecnic, $id);
-
-    if (!$stmt->execute()) {
-        echo "<p style='color:red;'>Error al modificar tècnic: " . $stmt->error . "</p>";
-    }
-    
-   
-    $stmt->close();
-}
-
-function actualitzarPrioritat($conn, $id, $prori) {
-    $sql = "UPDATE INCIDENCIA SET prioritat = ? WHERE Id = ?";
-    $stmt = $conn->prepare($sql);
-
-    if (!$stmt) {
-        die("Error en preparar la consulta: " . $conn->error);
-    }
-
-    $stmt->bind_param("si", $prori, $id);
-
-    if (!$stmt->execute()) {
-        echo "<p style='color:red;'>Error al modificar prioritat: " . $stmt->error . "</p>";
-    }
-
-
-    $stmt->close();
-}
 
 function actualitzarEstat($conn, $id, $estat) {
-    $sql = "UPDATE INCIDENCIA SET cod_estat = ? WHERE Id = ?";
+    $sql = "UPDATE INCIDENCIA SET cod_estat = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
@@ -112,8 +69,17 @@ function llegirEstat($conn, $codi_estat) {
     }
   }
 function llegirIncidencies($conn, $id) {
-    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA WHERE Id = $id AND cod_estat IN('1','2')";
+    if ($id === null) {
+        echo "<p style='text-align:center;'>No hi ha cap ID proporcionat</p>";
+        return;
+    }
+
+    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic, prioritat 
+            FROM INCIDENCIA 
+            WHERE cod_tecnic = ? AND cod_estat IN('1','2')";
+    
     $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
 
     if (!$stmt->execute()) {
         die("Error executing statement: " . $stmt->error);
@@ -136,13 +102,15 @@ function llegirIncidencies($conn, $id) {
             echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
             echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
             echo "</tr>";
-            
         }
         echo "</table>";
     } else {
         echo "<p style='text-align:center;'>No hi ha inscrits</p>";
     }
-  }
+
+    $stmt->close();
+}
+
   llegirIncidencies($conn,$id);
 
 ?>
@@ -176,35 +144,13 @@ function llegirIncidencies($conn, $id) {
     </div>
     <form action="" method="post">
 
-    <div>
-        
-            <label for="tecnic">Tecnic: <span class="boto"></span></label>
-            <select name="tecnic" id="tecnic">
-                <option value="">-- Selecciona un tecnic --</option>
-                <option value="0" <?= $tecnic == '0' ? 'selected' : '' ?>>Sense asignar</option>
-                <option value="1" <?= $tecnic == '1' ? 'selected' : '' ?>>Roberto</option>
-                <option value="2" <?= $tecnic == '2' ? 'selected' : '' ?>>Marta</option>
-                <option value="3" <?= $tecnic == '3' ? 'selected' : '' ?>>Anna</option>
-                
-               
-            </select>
-            
-     </div>
-     <div> 
-            <label for="proritat">Proritat: <span class="boto"></span></label>
-            <select name="proritat" id="proritat">
-                <option value=""> Selecciona una proritat </option>
-                <option value="Sense asignar" <?= $prori == 'Sense asignar' ? 'selected' : '' ?>>Sense asignar</option>
-                <option value="Critica" <?= $prori == 'Critica' ? 'selected' : '' ?>>Critica</option>
-                <option value="Alta" <?= $prori == 'Alta' ? 'selected' : '' ?>>Alta</option>
-                <option value="Moderada" <?= $prori == 'Moderada' ? 'selected' : '' ?>>Moderada</option>
-                <option value="Baixa" <?= $prori == 'Baixa' ? 'selected' : '' ?>>Baixa</option>
-               
-               
-            </select>
-            
-</div>
-<div>
+            <div>
+            <label for="id">el teu id de tecnic: <span class="boto"> </span></label>
+           <textarea class="insert" id="id" name="id" placeholder="Introdueix el teu ID"><?= htmlspecialchars($id ?? '') ?></textarea>
+            <button class="button type1" type="submit">
+                <span class="btn-txt">Envia</span>
+            </div>
+            <div>
             <label for="proritat">Estat: <span class="boto"></span></label>
             <select name="estat" id="estat">
                 <option value=""> Selecciona un estat </option>
@@ -218,7 +164,7 @@ function llegirIncidencies($conn, $id) {
                
            
             <button type='submit' class='edit-btn'>Enviar canvis</button>
-            <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
+        
 
             </div>
         </form>

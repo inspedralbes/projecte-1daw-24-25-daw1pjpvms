@@ -33,7 +33,7 @@ require "conexio.php";
   llegirIncidencies($conn);
 
   function llegirIncidencies($conn) {
-    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA";
+    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA WHERE cod_estat IN('1','2')";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt->execute()) {
