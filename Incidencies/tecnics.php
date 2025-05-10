@@ -9,10 +9,16 @@ $prori = $_POST['proritat'] ?? null;
 $estat = $_POST['estat'] ?? null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
    $id = htmlspecialchars(trim($_POST['id']));
+
+    if (!empty($id)) {
+         $idincidencia = llegirIdTec($conn, $id); 
+       
+    }
    
     if (!empty($estat)) {
-        actualitzarEstat($conn, $id, $estat);  
+        actualitzarEstat($conn, $idincidencia, $estat);  
     }
 
 }

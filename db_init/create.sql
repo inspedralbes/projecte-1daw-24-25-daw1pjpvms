@@ -32,7 +32,9 @@ CREATE DATABASE IF NOT EXISTS a24pauvermac_incidencies
 GRANT ALL PRIVILEGES ON a24pauvermac_incidencies.* TO 'usuari'@'%';
 FLUSH PRIVILEGES;
 
-USE a24pauvermac_incidencies;DROP TABLE IF EXISTS `INCIDENCIA`;
+USE a24pauvermac_incidencies;
+DROP TABLE IF EXISTS `ACTUACIONS`;
+DROP TABLE IF EXISTS `INCIDENCIA`;
 DROP TABLE IF EXISTS `TECNICS`;
 DROP TABLE IF EXISTS `ESTAT`;
 DROP TABLE IF EXISTS `DEPARTAMENT`;
@@ -76,14 +78,16 @@ INSERT INTO `TECNICS` (`cod_tecnic`, `rol`, `cod_proj`) VALUES
 (4,	'Mediador/a',	NULL);
 
 CREATE TABLE `INCIDENCIA` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `Id` int NOT NULL AUTO_INCREMENT,
   `cod_dept` int NOT NULL,
   `Descripcio` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `Data` datetime NOT NULL,
   `cod_estat` int NOT NULL,
   `cod_tecnic` int NOT NULL,
   `prioritat` enum('Sense asignar','Crítica','Alta','Moderada','Baixa') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`),
+  `data_ini_sol` datetime DEFAULT NULL,
+  `data_fi_sol` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`),
   KEY `cod_estat` (`cod_estat`),
   KEY `cod_tecnic` (`cod_tecnic`),
   KEY `INCIDENCIA_ibfk_3` (`cod_dept`),
@@ -92,3 +96,16 @@ CREATE TABLE `INCIDENCIA` (
   CONSTRAINT `INCIDENCIA_ibfk_3` FOREIGN KEY (`cod_dept`) REFERENCES `DEPARTAMENT` (`cod_dept`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `ACTUACIONS` (
+  `cod_act` int NOT NULL,
+  `cod_tecnic` int NOT NULL,
+  `cod_inci` int NOT NULL,
+  `desc` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mostrar` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `temps` int NOT NULL,
+  PRIMARY KEY (`cod_act`),
+  KEY `cod_inci` (`cod_inci`),
+  KEY `cod_tecnic` (`cod_tecnic`),
+  CONSTRAINT `actuacions_ibfk_1` FOREIGN KEY (`cod_inci`) REFERENCES `INCIDENCIA` (`Id`),
+  CONSTRAINT `actuacions_ibfk_2` FOREIGN KEY (`cod_tecnic`) REFERENCES `TECNICS` (`cod_tecnic`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

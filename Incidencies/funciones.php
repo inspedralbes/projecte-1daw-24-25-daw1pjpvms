@@ -294,4 +294,20 @@ function actualitzarPrioritat($conn, $id, $prori) {
         echo "<p style='text-align:center;'>No hi ha inscrits</p>";
     }
   }
+  function llegirIdTec($conn, $id) {
+    $sql = "SELECT Id FROM INCIDENCIA WHERE cod_tecnic = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $id);
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        return $row["Id"];
+    } else {
+        return "000";
+    }
+}
 ?>
