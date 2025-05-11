@@ -86,7 +86,7 @@ CREATE TABLE `INCIDENCIA` (
   `cod_tecnic` int NOT NULL,
   `prioritat` enum('Sense asignar','Crítica','Alta','Moderada','Baixa') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `data_ini_sol` datetime DEFAULT NULL,
-  `data_fi_sol` datetime DEFAULT NULL,
+  `data_fi_sol` date DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `cod_estat` (`cod_estat`),
   KEY `cod_tecnic` (`cod_tecnic`),

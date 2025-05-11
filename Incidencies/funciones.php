@@ -179,7 +179,7 @@ function actualitzarPrioritat($conn, $id, $prori) {
     }
   }
   function llegirIncidenciesllista($conn) {
-    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA WHERE cod_estat IN('1','2')";
+    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat,data_ini_sol FROM INCIDENCIA WHERE cod_estat IN('1','2')";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt->execute()) {
@@ -207,6 +207,8 @@ function actualitzarPrioritat($conn, $id, $prori) {
   echo "<td>
   <form action='administ.php' method='post'>
     <input type='hidden' name='id' value='" . htmlspecialchars($row['Id']) . "'>
+    <input type='hidden' name='dataini' value='" . htmlspecialchars($row['data_ini_sol'] ?? '') . "'>
+
     <button type='submit' class='edit-btn'>Editar</button>
   </form>
 </td>";
@@ -310,7 +312,7 @@ function llegirIncidenciesTecnics($conn, $id) {
         return;
     }
 
-    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic, prioritat 
+    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic, prioritat, data_ini_sol
             FROM INCIDENCIA 
             WHERE cod_tecnic = ? AND cod_estat IN('1','2')";
     
@@ -325,7 +327,7 @@ function llegirIncidenciesTecnics($conn, $id) {
 
     if ($result->num_rows > 0) {
         echo "<table>";
-        echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th></tr>";
+        echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th><th>Data inici</th></tr>";
         while ($row = $result->fetch_assoc()) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
             $LlegirDept = llegirDept($conn, $row["cod_dept"]);
@@ -337,6 +339,7 @@ function llegirIncidenciesTecnics($conn, $id) {
             echo "<td>" . htmlspecialchars($row["cod_tecnic"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
             echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
+            echo "<td>" . htmlspecialchars($row["data_ini_sol"]) . "</td>";
 echo " <td>
   <form action='actuacions.php' method='post'>
     <input type='hidden' name='id' value='" . htmlspecialchars($row['cod_tecnic']) . "'>
@@ -378,18 +381,34 @@ function llegirActuUsu($conn, $idincidencia) {
         echo "<p style='text-align:center;'>No hi ha inscrits</p>";
     }
 }
-function dataIniAct($conn, $id, $tecnic) {
-    $sql = "UPDATE ACTUACIO SET cod_tecnic = ? WHERE Id = ?";
+function dataIniAct($conn, $id, $dataini) {
+    $sql = "UPDATE INCIDENCIA SET data_ini_sol = ? WHERE Id = ?";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
         die("Error en preparar la consulta: " . $conn->error);
     }
 
-    $stmt->bind_param("si", $tecnic, $id);
+    $stmt->bind_param("si", $dataini, $id);
 
     if (!$stmt->execute()) {
-        echo "<p style='color:red;'>Error al modificar tècnic: " . $stmt->error . "</p>";
+        echo "<p style='color:red;'>Error al modificar data: " . $stmt->error . "</p>";
+    }
+
+    $stmt->close();
+}
+function dataFiAct($conn, $id, $datafi) {
+    $sql = "UPDATE INCIDENCIA SET data_fi_sol = ? WHERE Id = ?";
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        die("Error en preparar la consulta: " . $conn->error);
+    }
+
+    $stmt->bind_param("si", $datafi, $id);
+
+    if (!$stmt->execute()) {
+        echo "<p style='color:red;'>Error al modificar data: " . $stmt->error . "</p>";
     }
 
     $stmt->close();

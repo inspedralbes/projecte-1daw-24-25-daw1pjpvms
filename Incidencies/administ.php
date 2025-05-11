@@ -7,12 +7,17 @@ $incidencia = null;
 $tecnic = $_POST['tecnic'] ?? null;
 $prori = $_POST['proritat'] ?? null;  
 $estat = $_POST['estat'] ?? null;
+$dataini = $_POST['dataini'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    
    
     if (isset($tecnic) && $tecnic !== "") {
         actualitzarTecnic($conn, $id, $tecnic);
+        if(empty($dataini)){
+            $dataini = date('Y-m-d H:i:s');
+            dataIniAct($conn,$id,$dataini);
+        }
         
     }    
 
@@ -103,6 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
            
             <button type='submit' class='edit-btn'>Enviar canvis</button>
             <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
+            <input type='hidden' name='dataini' value="<?=htmlspecialchars($dataini)?>"> 
 
             </div>
         </form>
