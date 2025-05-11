@@ -29,6 +29,7 @@ $codi = $_POST['codi'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   llegirConsulta($conn, $codi);
+  llegirActuUsu($conn, $codi);
   die;
 }
 ?>

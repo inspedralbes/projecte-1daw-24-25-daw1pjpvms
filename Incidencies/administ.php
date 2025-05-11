@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    
     if (isset($tecnic) && $tecnic !== "") {
         actualitzarTecnic($conn, $id, $tecnic);
+        
     }    
 
     if (!empty($prori)) {

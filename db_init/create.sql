@@ -97,11 +97,11 @@ CREATE TABLE `INCIDENCIA` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `ACTUACIONS` (
-  `cod_act` int NOT NULL,
+  `cod_act` int NOT NULL AUTO_INCREMENT,
   `cod_tecnic` int NOT NULL,
   `cod_inci` int NOT NULL,
-  `desc` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mostrar` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descri` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mostrar` int DEFAULT NULL,
   `temps` int NOT NULL,
   PRIMARY KEY (`cod_act`),
   KEY `cod_inci` (`cod_inci`),

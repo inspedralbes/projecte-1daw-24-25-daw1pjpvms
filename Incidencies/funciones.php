@@ -51,49 +51,6 @@ function llegirDept($conn, $codi_dept) {
     }
 }
 
-function llegirIncidenciesTecnics($conn, $id) {
-    if ($id === null) {
-        echo "<p style='text-align:center;'>No hi ha cap ID proporcionat</p>";
-        return;
-    }
-
-    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic, prioritat 
-            FROM INCIDENCIA 
-            WHERE cod_tecnic = ? AND cod_estat IN('1','2')";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-
-    if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        echo "<table>";
-        echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th></tr>";
-        while ($row = $result->fetch_assoc()) {
-            $nomEstat = llegirEstat($conn, $row["cod_estat"]);
-            $LlegirDept = llegirDept($conn, $row["cod_dept"]);
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>"; 
-            echo "<td>" . htmlspecialchars($LlegirDept) . "</td>";
-            echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["Data"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["cod_tecnic"]) . "</td>";
-            echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
-            echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-    } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
-    }
-
-    $stmt->close();
-}
-
 function llegirIncidenciaPerId($conn, $id) {
     $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA WHERE Id = ? AND cod_estat IN('1','2')";
     $stmt = $conn->prepare($sql);
@@ -309,5 +266,132 @@ function actualitzarPrioritat($conn, $id, $prori) {
     } else {
         return "000";
     }
+}
+function guardarActu($conn, $id, $idincidencia, $descripcio, $visible, $temps) {
+    $sql = "INSERT INTO ACTUACIONS (cod_tecnic, cod_inci, descri, mostrar, temps) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iisii",$id, $idincidencia, $descripcio, $visible, $temps );
+
+    if (!$stmt->execute()) {
+        die("Error en la consulta: " . $stmt->error);
+    }
+
+    $stmt->close();
+}
+function llegirActu($conn, $idincidencia) {
+    $sql = "SELECT cod_inci, descri,temps FROM ACTUACIONS WHERE cod_inci = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $idincidencia);
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<table>";
+        echo "<tr><th>Id Incidencia</th><th>Descripcio</th><th>Temps</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row["cod_inci"]) . "</td>"; 
+            echo "<td>" . htmlspecialchars($row["descri"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["temps"]) . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
+    }
+}
+function llegirIncidenciesTecnics($conn, $id) {
+    if ($id === null) {
+        echo "<p style='text-align:center;'>No hi ha cap ID proporcionat</p>";
+        return;
+    }
+
+    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic, prioritat 
+            FROM INCIDENCIA 
+            WHERE cod_tecnic = ? AND cod_estat IN('1','2')";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<table>";
+        echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+            $nomEstat = llegirEstat($conn, $row["cod_estat"]);
+            $LlegirDept = llegirDept($conn, $row["cod_dept"]);
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>"; 
+            echo "<td>" . htmlspecialchars($LlegirDept) . "</td>";
+            echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["Data"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["cod_tecnic"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
+            echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
+echo " <td>
+  <form action='actuacions.php' method='post'>
+    <input type='hidden' name='id' value='" . htmlspecialchars($row['cod_tecnic']) . "'>
+    <input type='hidden' name='idincidencia' value='" . htmlspecialchars($row['Id']) . "'>
+    <button type='submit' class='edit-btn'>Afegir actuacions</button>
+  </form> </td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
+    }
+
+    $stmt->close();
+}
+function llegirActuUsu($conn, $idincidencia) {
+    $sql = "SELECT cod_inci, descri,temps FROM ACTUACIONS WHERE cod_inci = ? AND mostrar = 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $idincidencia);
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<b> Comentaris progrés: </b>";
+        echo "<table>";
+        echo "<tr>><th>Descripcio</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+            
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row["descri"]) . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
+    }
+}
+function dataIniAct($conn, $id, $tecnic) {
+    $sql = "UPDATE ACTUACIO SET cod_tecnic = ? WHERE Id = ?";
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        die("Error en preparar la consulta: " . $conn->error);
+    }
+
+    $stmt->bind_param("si", $tecnic, $id);
+
+    if (!$stmt->execute()) {
+        echo "<p style='color:red;'>Error al modificar tècnic: " . $stmt->error . "</p>";
+    }
+
+    $stmt->close();
 }
 ?>
