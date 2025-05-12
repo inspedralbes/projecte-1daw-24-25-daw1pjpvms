@@ -164,11 +164,20 @@ function actualitzarPrioritat($conn, $id, $prori) {
         echo "<tr><th>Departament</th><th>Descripció</th><th>Estat</th></tr>";
         while ($row = $result->fetch_assoc()) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
+            $styleEstat = "";
+            if ($row["cod_estat"] == 1) {
+                $styleEstat = "color: red; font-weight: bold;";
+            } elseif ($row["cod_estat"] == 2) {
+                $styleEstat = "color: orange;";
+            } elseif ($row["cod_estat"] == 3) {
+                $styleEstat = "color: green;";
+            }
+
             $nomDept = llegirDept($conn, $row["cod_dept"]);
             echo "<tr>";
             echo "<td>" . htmlspecialchars($nomDept) . "</td>";
             echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
-            echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
+            echo "<td style='$styleEstat'>" . htmlspecialchars($nomEstat) . "</td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -326,8 +335,19 @@ function llegirIncidenciesTecnics($conn, $id) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "<table>";
-        echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th><th>Data inici</th></tr>";
+        echo "<table class='incidencies-table'>
+                <tr>
+                    <th>ID</th>
+                    <th>Departament</th>
+                    <th>Descripció</th>
+                    <th>Data</th>
+                    <th>Tècnic</th>
+                    <th>Prioritat</th>
+                    <th>Estat</th>
+                    <th>Data inici</th>
+                    <th>Accions</th>
+                </tr>";
+
         while ($row = $result->fetch_assoc()) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
             $LlegirDept = llegirDept($conn, $row["cod_dept"]);
@@ -340,21 +360,24 @@ function llegirIncidenciesTecnics($conn, $id) {
             echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
             echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
             echo "<td>" . htmlspecialchars($row["data_ini_sol"]) . "</td>";
-echo " <td>
-  <form action='actuacions.php' method='post'>
-    <input type='hidden' name='id' value='" . htmlspecialchars($row['cod_tecnic']) . "'>
-    <input type='hidden' name='idincidencia' value='" . htmlspecialchars($row['Id']) . "'>
-    <button type='submit' class='edit-btn'>Afegir actuacions</button>
-  </form> </td>";
+            echo "<td>
+                    <form action='actuacions.php' method='post'>
+                        <input type='hidden' name='id' value='" . htmlspecialchars($row['cod_tecnic']) . "'>
+                        <input type='hidden' name='idincidencia' value='" . htmlspecialchars($row['Id']) . "'>
+                        <button type='submit' class='edit-btn'>Afegir actuacions</button>
+                    </form>
+                </td>";
             echo "</tr>";
         }
+
         echo "</table>";
     } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
+        echo "<p style='text-align:center;'>No hi ha incidències disponibles per a aquest ID de tècnic.</p>";
     }
 
     $stmt->close();
 }
+
 function llegirActuUsu($conn, $idincidencia) {
     $sql = "SELECT cod_inci, descri,temps FROM ACTUACIONS WHERE cod_inci = ? AND mostrar = 1";
     $stmt = $conn->prepare($sql);

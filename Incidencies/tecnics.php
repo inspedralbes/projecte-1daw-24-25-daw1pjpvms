@@ -3,21 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Formulari d'incidències</title>
-    <style>
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin: 20px auto;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link rel="stylesheet" href="estilos.css">
+
 </head>
 <body>
 
@@ -35,7 +22,6 @@
         </div>
         <br>
     </form>
-
 
 </body>
 </html>

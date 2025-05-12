@@ -5,7 +5,7 @@ html,body{
 
 form{
     margin: 20px;
-    
+    display: block;
 }
 body {
     font-family: Arial, Helvetica, sans-serif;
@@ -29,9 +29,11 @@ div{
     border-radius: 3% 3% 3% 3%;
     padding: 10px;
     border: 1px solid rgb(190, 190, 190);
-    
-
 }
+.div2{
+    display: block;
+}
+
 input {
     
   
@@ -62,10 +64,7 @@ select{
     margin-bottom: 10px;
 
 }
-form{
 
-    display: block;
-}
 .phpcuadre{
     width: 800px;
     height: 600;
@@ -205,4 +204,39 @@ button {
     outline: none;
 }
 
+.tabla-container {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.incidencies-table {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.incidencies-table th, .incidencies-table td {
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.incidencies-table th {
+    background-color: #424344;
+    color: white;
+}
+
+.incidencies-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.incidencies-table tr:hover {
+    background-color: #f1f1f1;
+}
 
