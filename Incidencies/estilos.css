@@ -30,9 +30,8 @@ div{
     padding: 10px;
     border: 1px solid rgb(190, 190, 190);
 }
-.div2{
-    display: block;
-}
+
+
 
 input {
     
@@ -218,6 +217,7 @@ button {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
+    margin-top: 13vh;
 }
 
 .incidencies-table th, .incidencies-table td {
@@ -238,5 +238,115 @@ button {
 
 .incidencies-table tr:hover {
     background-color: #f1f1f1;
+}
+
+
+.actuacio-container {
+    border: none; 
+    
+    border-width: 0; 
+    box-shadow: none; 
+    margin-top: 13vh;
+    background-color: transparent;
+}
+
+.actuacio-form {
+    margin: 20px;
+    display: block;
+}
+
+.actuacio-form-group {
+    margin-bottom: 20px;
+}
+
+.actuacio-textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: 0.3s;
+    outline: none;
+    min-height: 100px;
+    resize: vertical;
+}
+
+.actuacio-input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 10px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+.actuacio-select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 10px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+.actuacio-btn {
+    height: 50px;
+    width: 200px;
+    background-color: transparent;
+    cursor: pointer;
+    border: 2px solid #252525;
+    overflow: hidden;
+    border-radius: 30px;
+    color: #333;
+    transition: all 0.5s ease-in-out;
+    margin: 20px auto;
+    display: block;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+.actuacio-btn:hover {
+    box-shadow: 1px 1px 200px #252525;
+    color: #fff;
+    border: none;
+}
+
+.actuacio-checkbox {
+    margin-left: 10px;
+    transform: scale(1.3);
+}
+
+.actuacio-links {
+    display: flex;
+
+    margin-top: 20px;
+}
+
+.actuacio-link {
+    text-decoration: none;
+    justify-content: center;
+    font-weight: bold;
+    color: #424344;
+    padding: 8px 15px;
+    border: 1px solid rgb(80, 80, 80);
+    border-radius: 6px;
+    transition: all 0.3s;
+     background-color: #f9f9f9;
+}
+
+
+.actuacio-link:hover {
+    background-color: #424344;
+    color: white;
+}
+
+.actuacio-estado-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.espacio{
+    height: 1000px;
 }
 

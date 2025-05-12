@@ -290,7 +290,7 @@ function guardarActu($conn, $id, $idincidencia, $descripcio, $visible, $temps) {
     $stmt->close();
 }
 function llegirActu($conn, $idincidencia) {
-    $sql = "SELECT cod_inci, descri,temps FROM ACTUACIONS WHERE cod_inci = ?";
+    $sql = "SELECT cod_inci, descri, temps FROM ACTUACIONS WHERE cod_inci = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $idincidencia);
 
@@ -301,8 +301,9 @@ function llegirActu($conn, $idincidencia) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "<table>";
-        echo "<tr><th>Id Incidencia</th><th>Descripcio</th><th>Temps</th></tr>";
+
+        echo "<table class='incidencies-table'>";
+        echo "<tr><th>Id Incidència</th><th>Descripció</th><th>Temps (min)</th></tr>";
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row["cod_inci"]) . "</td>"; 
@@ -312,9 +313,10 @@ function llegirActu($conn, $idincidencia) {
         }
         echo "</table>";
     } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
+        echo "<p style='text-align:center;'>No hi ha actuacions registrades.</p>";
     }
 }
+
 function llegirIncidenciesTecnics($conn, $id) {
     if ($id === null) {
         echo "<p style='text-align:center;'>No hi ha cap ID proporcionat</p>";
