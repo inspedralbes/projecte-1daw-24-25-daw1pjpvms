@@ -71,7 +71,22 @@ select{
     border-radius: 10px;
     box-shadow: 5px 7px 0px rgba(0, 0, 0, 0.466); 
     display: inline-block;
+    justify-content: center;
     
+}
+.phpcuadre2{
+    width: 50vh;
+    height: 600;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 7px 15px rgba(0, 0, 0, 0.466); 
+    display: inline-block;
+    position: relative
+    
+}
+#titolusuari{
+    position: absolute;
+    top: 25vh;
 }
 a{
     
@@ -331,7 +346,7 @@ button {
     border: 1px solid rgb(80, 80, 80);
     border-radius: 6px;
     transition: all 0.3s;
-     background-color: #f9f9f9;
+    background-color: #f9f9f9;
 }
 
 
@@ -350,4 +365,56 @@ button {
     height: 1000px;
 }
 
+.phpcuadre2 p {
+ 
+  border: 1px solid rgb(192, 192, 192);
+  border-radius: 20px;
+  padding: 20px;
+ color:#424344;
+ 
+}
+.phpcuadre2 b {
+  background-color: rgb(240, 240, 240);
+    text-decoration: none;
+    font-weight: lighter;
+    color:#575757d5;
+ 
+}
+.phpcuadre2 strong {
+    
+    font-weight: lighter;
+    color:#575757d5;
+ 
+}
+.phpcuadre2 a {
+border: none;
+background-color: #333;
+color: white;
+font-weight: 100;
+padding: 20px;
+position: absolute;
+bottom: -100px;
+left: 100px;
+transition: all 0.3s ease;
+ 
+}
+.phpcuadre2 #important {
 
+border-radius: 20px;
+padding: 20px;
+background-color: #333;
+color: rgb(240, 240, 240);
+
+ 
+}
+.phpcuadre2 #important strong{
+border-radius: 20px;
+background-color: #333;
+color: rgb(240, 240, 240);
+
+ 
+}
+.phpcuadre2 a:hover{
+    box-shadow: 5px 7px 10px rgba(0, 0, 0, 0.281); 
+    color: rgb(240, 240, 240);
+}

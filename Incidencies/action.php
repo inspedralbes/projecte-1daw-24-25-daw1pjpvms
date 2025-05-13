@@ -1,3 +1,27 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulari d'incidències</title>
+    <link rel="stylesheet" href="estilos.css">
+   
+    <style>
+        textarea {
+            width: 100%;
+            resize: none; 
+            padding: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
 <?php
 
 require "conexio.php";
@@ -35,15 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         guardarIncidencia($conn, $departament, $descripcio, $data, $estat, $codtec, $proritat);
         $idllegit = llegirId($conn, $data);
-        echo "<div class='phpcuadre'><h1>Incidència registrada correctament</h1>";
-        echo "<p>Les dades guardades son:</p>";
+        echo "<h1 id='titolusuari'>Incidència registrada correctament</h1>";
+        echo "<div class='phpcuadre2'>";
         echo "<p><strong>Departament:</strong> $departament</p>";
         echo "<p><strong>Descripció:</strong> $descripcio</p>";
-        echo "<p><strong>ID de consulta:</strong> $idllegit</p>";
-
-        echo "<p><a href='./'>Tornar a la pàgina principal</a></p>";
+        echo "<p id='important'><strong >ID de consulta:</strong> $idllegit</p>";
+        echo "<b><a href='./'>Tornar a la pàgina principal</a></b>";
         echo "</div>";
-
+        
         die;
     }
 }

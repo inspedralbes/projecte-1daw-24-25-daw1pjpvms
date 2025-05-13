@@ -232,6 +232,7 @@ function actualitzarPrioritat($conn, $id, $prori) {
             
         }
         echo "</table>";
+        echo "<a href='./' class='btn btn-secondary me-2'>Tornar a la pàgina principal</a>";
         echo "</div>";
         echo "</div>";
 
