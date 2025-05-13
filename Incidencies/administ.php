@@ -99,20 +99,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
            <br>
                
            
-   <div class="d-grid gap-2">
+<div class="d-grid gap-2">
   <button class="btn btn-primary" type="submit">Enviar canvis</button>   
 </div>
 <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
 <input type="hidden" name="dataini" value="<?= htmlspecialchars($dataini) ?>">
 
-
-
-</form>
-
 <div class="container mt-4">
   <a href="./" class="btn btn-secondary me-2">Tornar a la pàgina principal</a>
   <a href="llistat.php" class="btn btn-primary">Espai de control</a>
 </div>
+
 
 <script>
   document.querySelector("form").addEventListener("submit", function(event) {
@@ -122,4 +119,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </script>
 
 </body>
+
 </html>

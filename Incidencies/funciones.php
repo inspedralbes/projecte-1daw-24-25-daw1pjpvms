@@ -159,8 +159,10 @@ function actualitzarPrioritat($conn, $id, $prori) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "<h1 style='text-align:center;'>Estat de la teva consulta</h1>";
-        echo "<table>";
+        echo "<br><h1 style='text-align:center;'>Estat de la teva consulta</h1>";
+        echo "<div class='container mt-4'>";
+        echo "<div class='p-3 bg-light border rounded'>";
+        echo "<table class='table table-striped'>";
         echo "<tr><th>Departament</th><th>Descripció</th><th>Estat</th></tr>";
         while ($row = $result->fetch_assoc()) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
@@ -181,7 +183,9 @@ function actualitzarPrioritat($conn, $id, $prori) {
             echo "</tr>";
         }
         echo "</table>";
-          
+        echo "</div>";
+        echo "</div>";
+
 
     } else {
         echo "<p style='text-align:center;'>No hi ha inscrits</p>";
@@ -402,8 +406,10 @@ function llegirActuUsu($conn, $idincidencia) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "<b> Comentaris progrés: </b>";
-        echo "<table>";
+        echo "<div class='container mt-4'>";
+        echo "<div class='p-3 bg-light border rounded'>";
+        echo "<b> Comentaris progrés: </b><p>";
+        echo "<table class='table table-striped'>";
         echo "<tr><th>Descripcio</th></tr>";
         while ($row = $result->fetch_assoc()) {
             
@@ -415,6 +421,9 @@ function llegirActuUsu($conn, $idincidencia) {
     } else {
         echo "<p style='text-align:center;'>No hi ha inscrits</p>";
     }
+    echo "<a href='./' class='btn btn-secondary me-2'>Tornar a la pàgina principal</a>";
+    echo "</div>"; 
+    echo "</div>";
 }
 function dataIniAct($conn, $id, $dataini) {
     $sql = "UPDATE INCIDENCIA SET data_ini_sol = ? WHERE Id = ?";
