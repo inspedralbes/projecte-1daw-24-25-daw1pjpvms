@@ -199,7 +199,9 @@ function actualitzarPrioritat($conn, $id, $prori) {
 
     if ($result->num_rows > 0) {
         echo "<h1 style='text-align:center;'>Llistat d'incidències</h1>";
-        echo "<table>";
+        echo "<div class='container mt-4'>";
+        echo "<div class='p-3 bg-light border rounded'>";
+        echo "<table class='table table-striped'>";
         echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th><th>Opcions</th></tr>";
         while ($row = $result->fetch_assoc()) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
@@ -218,7 +220,7 @@ function actualitzarPrioritat($conn, $id, $prori) {
     <input type='hidden' name='id' value='" . htmlspecialchars($row['Id']) . "'>
     <input type='hidden' name='dataini' value='" . htmlspecialchars($row['data_ini_sol'] ?? '') . "'>
 
-    <button type='submit' class='edit-btn'>Editar</button>
+    <button type='submit' class='btn btn-outline-success'>Editar</button>
   </form>
 </td>";
 
@@ -226,6 +228,9 @@ function actualitzarPrioritat($conn, $id, $prori) {
             
         }
         echo "</table>";
+        echo "</div>";
+        echo "</div>";
+
     } else {
         echo "<p style='text-align:center;'>No hi ha inscrits</p>";
     }
@@ -241,7 +246,10 @@ function actualitzarPrioritat($conn, $id, $prori) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "<table>";
+        echo "<p><h1 style='text-align:center;'>Llistat d'incidències</h1>";
+        echo "<div class='container mt-4'>";
+        echo "<div class='p-3 bg-light border rounded'>";
+        echo "<table class='table table-striped'>";
         echo "<tr><th>ID</th><th>Departament</th><th>Descripció</th><th>Data</th><th>Técnic</th><th>Prioritat</th><th>Estat</th></tr>";
         while ($row = $result->fetch_assoc()) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
@@ -258,6 +266,8 @@ function actualitzarPrioritat($conn, $id, $prori) {
             
         }
         echo "</table>";
+        echo "</div>";
+        echo "</div>";
     } else {
         echo "<p style='text-align:center;'>No hi ha inscrits</p>";
     }
@@ -394,7 +404,7 @@ function llegirActuUsu($conn, $idincidencia) {
     if ($result->num_rows > 0) {
         echo "<b> Comentaris progrés: </b>";
         echo "<table>";
-        echo "<tr>><th>Descripcio</th></tr>";
+        echo "<tr><th>Descripcio</th></tr>";
         while ($row = $result->fetch_assoc()) {
             
             echo "<tr>";
