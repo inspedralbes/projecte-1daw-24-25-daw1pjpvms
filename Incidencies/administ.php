@@ -111,12 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 
-<script>
-  document.querySelector("form").addEventListener("submit", function(event) {
-    event.preventDefault(); 
-    document.getElementById("miAlerta").classList.remove("d-none");
-  });
-</script>
+
 
 </body>
 

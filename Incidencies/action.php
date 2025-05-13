@@ -59,7 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         guardarIncidencia($conn, $departament, $descripcio, $data, $estat, $codtec, $proritat);
         $idllegit = llegirId($conn, $data);
-        echo "<h1 id='titolusuari'>Incidència registrada correctament</h1>";
+     
+
         echo "<div class='phpcuadre2'>";
         echo "<p><strong>Departament:</strong> $departament</p>";
         echo "<p><strong>Descripció:</strong> $descripcio</p>";
