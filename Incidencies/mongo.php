@@ -19,6 +19,7 @@ $collection->insertOne([
     'ip_origin' => $ip,
     'date' => $hora
 ]);
+
 echo "Dades inserides a demo .\n";
 
 

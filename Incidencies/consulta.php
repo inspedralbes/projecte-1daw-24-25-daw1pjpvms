@@ -10,7 +10,12 @@
 <?php
 require "conexio.php";
 include "funciones.php";
-
+$User = 'Usuari';
+$data = date('Y-m-d H:i:s');
+$ipUsuari = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$pageUsuari = 'Consulta estat incidencies';
+guardarLog($collection, $User, $data, $ipUsuari ,$pageUsuari);
+  
 $codi = $_POST['codi'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 

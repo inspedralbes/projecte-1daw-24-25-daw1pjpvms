@@ -18,9 +18,14 @@ include "funciones.php";
 <body>
 
   <?php
-
+  $User = 'Administrador';
+  $data = date('Y-m-d H:i:s');
+  $ipUsuari = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+  $pageUsuari = 'Llistat Incidencies';
+  guardarLog($collection, $User, $data, $ipUsuari ,$pageUsuari);
+  
   llegirIncidenciesllista($conn);
-
+  
   $conn->close();
   ?>
 

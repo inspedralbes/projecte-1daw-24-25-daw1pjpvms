@@ -34,7 +34,12 @@ $descripcio = $_POST['descripcio'] ?? null;
 $estat = $_POST['estat'] ?? null;
 $temps = $_POST['temps'] ?? null;
 $visible = $_POST['visible'] ?? null;
-
+$User = 'Tecnic';
+$data = date('Y-m-d H:i:s');
+$ipUsuari = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$pageUsuari = 'Consulta Incidencies tecnics';
+  guardarLog($collection, $User, $data, $ipUsuari ,$pageUsuari);
+  
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   

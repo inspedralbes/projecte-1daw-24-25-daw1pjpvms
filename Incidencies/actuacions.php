@@ -9,6 +9,12 @@ $temps = $_POST['temps'] ?? null;
 $visible = $_POST['visible'] ?? null;
 $idincidencia = $_POST['idincidencia'] ?? null;
 $datafi = $_POST['datafi'] ?? null;
+$User = 'Tecnic';
+$data = date('Y-m-d H:i:s');
+$ipUsuari = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$pageUsuari = 'Actuacions';
+
+guardarLog($collection, $User, $data, $ipUsuari ,$pageUsuari);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      

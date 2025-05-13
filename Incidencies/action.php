@@ -27,15 +27,21 @@
 require "conexio.php";
 include "funciones.php";
 
+
 $departament = $_POST['departament'] ?? '';
 $descripcio = $_POST['descripcio'] ?? '';
 $departamentErr = '';
 $descripcioErr = '';
 $errors = -1;
-$data = date('Y-m-d H:i:s');
 $estat = 1;
 $codtec = 0;
 $proritat = 'Sense asignar';
+$User = 'Professor';
+$data = date('Y-m-d H:i:s');
+$ipUsuari = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$pageUsuari = 'Form Incidencies';
+
+guardarLog($collection, $User, $data, $ipUsuari ,$pageUsuari);
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

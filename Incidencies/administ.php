@@ -8,6 +8,12 @@ $tecnic = $_POST['tecnic'] ?? null;
 $prori = $_POST['proritat'] ?? null;  
 $estat = $_POST['estat'] ?? null;
 $dataini = $_POST['dataini'];
+$User = 'Administrador';
+$data = date('Y-m-d H:i:s');
+$ipUsuari = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$pageUsuari = 'Modificar Incidencies';
+
+guardarLog($collection, $User, $data, $ipUsuari ,$pageUsuari);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    

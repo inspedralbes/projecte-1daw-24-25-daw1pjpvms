@@ -458,4 +458,37 @@ function dataFiAct($conn, $id, $datafi) {
 
     $stmt->close();
 }
+function guardarLog($collection, $User, $dataUsuari, $ipUsuari ,$pageUsuari) {
+    $collection->insertOne([
+    'User' => $User,
+    'Data' => $dataUsuari,
+    'ip_origin' => $ipUsuari,
+    'pagina visitada' => $pageUsuari
+]);  
+}
+
+function llegirDadesMongodb($collection) {
+    $documents = $collection->find();
+
+    echo "<div class='container mt-4'>";
+    echo "<h1> Dades MongoDB del gestor </h1>";
+    echo "<div class='p-3 bg-light border rounded'>";
+    echo "<table class='table table-striped'>";
+    echo "<tr><th>Usuari</th><th>Data</th><th>IP</th><th>Pàgina visitada</th></tr>";
+
+    foreach ($documents as $document) {
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($document['User'] ?? "x") . "</td>";
+        echo "<td>" . htmlspecialchars($document['Data'] ?? "x") . "</td>";
+        echo "<td>" . htmlspecialchars($document['ip_origin'] ?? "x") . "</td>";
+        echo "<td>" . htmlspecialchars($document['pagina visitada'] ?? "x") . "</td>";
+        echo "</tr>";
+    }
+
+    echo "</table>";
+    echo "<a href='./' class='btn btn-secondary me-2'>Tornar a la pàgina principal</a>";
+    echo "</div>"; 
+    echo "</div>";
+}
+
 ?>
