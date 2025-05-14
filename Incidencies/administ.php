@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form action="" method="post">
 <div class="container mt-4">
     <div id="miAlerta" class="alert alert-success mt-3 d-none" role="alert">
-        Els canvis s'han enviat correctament!
-    </div>  
+    Els canvis s'han enviat correctament!
+    </div>
     <div class="p-3 bg-light border rounded">
     <div class="form-floating">
         
@@ -115,7 +115,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <a href="./" class="btn btn-secondary me-2">Tornar a la pàgina principal</a>
   <a href="llistat.php" class="btn btn-primary">Espai de control</a>
 </div>
+<form>
+<script>
+  const formulario = document.querySelector("form");
+  const boton = formulario.querySelector("button[type='submit']");
+  boton.addEventListener("click", function () {
+    localStorage.setItem("mostrarAlerta", "1");
+  });
+  window.addEventListener("DOMContentLoaded", function () {
+    if (localStorage.getItem("mostrarAlerta") === "1") {
+      const alerta = document.getElementById("miAlerta");
+      if (alerta) {
+        alerta.classList.remove("d-none");
+      }
+      localStorage.removeItem("mostrarAlerta"); 
+    }
+  });
+</script>
 
+
+</form>
 
 
 

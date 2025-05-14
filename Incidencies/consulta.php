@@ -27,6 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 </head>
+
+
 <body>
 
   <header class="banner">
@@ -39,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="forms">
       <form action="" method="POST">
         <label for="codi">Codi d'incidència:</label>
-        <input type="text" id="codi" name="codi" placeholder="Ex: INC12345" required>
+        <input type="text" id="codi" name="codi" placeholder="Codi" required>
 
         <button class="btn btn-dark" type="submit">
           <span class="btn-txt">CONSULTAR</span>
@@ -47,6 +49,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </form>
     </div>
   </main>
+<script>
+  const form = document.querySelector("form");
+  const inputCodi = document.getElementById("codi");
+  const missatge = document.createElement("div");
+  missatge.className = "text-danger mt-2";
+  missatge.style.display = "none";
+  missatge.textContent = "Només es permeten números.";
+  inputCodi.parentNode.appendChild(missatge);
+
+  form.addEventListener("submit", function (e) {
+    if (!/^\d+$/.test(inputCodi.value)) {
+      e.preventDefault(); 
+      missatge.style.display = "block";
+    } else {
+      missatge.style.display = "none";
+    }
+  });
+</script>
+
 
 </body>
+
 </html>
