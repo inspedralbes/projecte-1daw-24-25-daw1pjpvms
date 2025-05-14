@@ -10,10 +10,11 @@ if ($conn->connect_error) {
     
 }
 
-//MongoDB
 
 require 'vendor/autoload.php';
 
-$client = new MongoDB\Client("mongodb://root:example@mongo:27017");
+$uri = "mongodb+srv://a24marsuaber:masube13@cluster0.ai2nqhr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+$client = new MongoDB\Client($uri);
 
 $collection = $client->demo->users;
