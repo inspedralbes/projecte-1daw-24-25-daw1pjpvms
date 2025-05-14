@@ -66,16 +66,17 @@ CREATE TABLE `TECNICS` (
   `cod_tecnic` int NOT NULL,
   `rol` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cod_proj` int DEFAULT NULL,
+  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`cod_tecnic`),
   KEY `nom` (`rol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `TECNICS` (`cod_tecnic`, `rol`, `cod_proj`) VALUES
-(0,	'Sense asignar',	NULL),
-(1,	'Informatic',	NULL),
-(2,	'Manteniment',	NULL),
-(3,	'Multimedia',	NULL),
-(4,	'Mediador/a',	NULL);
+INSERT INTO `TECNICS` (`cod_tecnic`, `rol`, `cod_proj`, `nom`) VALUES
+(0,	'Sense asignar',	NULL,	'Cap'),
+(1,	'Informatic',	NULL,	'Marta Sánchez'),
+(2,	'Manteniment',	NULL,	'Jorge López'),
+(3,	'Multimedia',	NULL,	'Nuria Rius'),
+(4,	'Mediador/a',	NULL,	'Sofia Vera');
 
 CREATE TABLE `INCIDENCIA` (
   `Id` int NOT NULL AUTO_INCREMENT,
@@ -103,9 +104,11 @@ CREATE TABLE `ACTUACIONS` (
   `descri` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `mostrar` int DEFAULT NULL,
   `temps` int NOT NULL,
+  `data` datetime NOT NULL,
   PRIMARY KEY (`cod_act`),
   KEY `cod_inci` (`cod_inci`),
   KEY `cod_tecnic` (`cod_tecnic`),
   CONSTRAINT `actuacions_ibfk_1` FOREIGN KEY (`cod_inci`) REFERENCES `INCIDENCIA` (`Id`),
   CONSTRAINT `actuacions_ibfk_2` FOREIGN KEY (`cod_tecnic`) REFERENCES `TECNICS` (`cod_tecnic`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

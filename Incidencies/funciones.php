@@ -293,17 +293,18 @@ function actualitzarPrioritat($conn, $id, $prori) {
         return "000";
     }
 }
-function guardarActu($conn, $id, $idincidencia, $descripcio, $visible, $temps) {
-    $sql = "INSERT INTO ACTUACIONS (cod_tecnic, cod_inci, descri, mostrar, temps) VALUES (?, ?, ?, ?, ?)";
+function guardarActu($conn, $id, $idincidencia, $descripcio, $visible, $temps, $data) {
+    $sql = "INSERT INTO ACTUACIONS (cod_tecnic, cod_inci, descri, mostrar, temps, `data`) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iisii",$id, $idincidencia, $descripcio, $visible, $temps );
+    $stmt->bind_param("iisiis", $id, $idincidencia, $descripcio, $visible, $temps, $data );
 
     if (!$stmt->execute()) {
         die("Error en la consulta: " . $stmt->error);
     }
 
-    $stmt->close();
+    $stmt->close(); 
 }
+
 function llegirActu($conn, $idincidencia) {
     $sql = "SELECT cod_inci, descri, temps FROM ACTUACIONS WHERE cod_inci = ?";
     $stmt = $conn->prepare($sql);
@@ -396,7 +397,7 @@ function llegirIncidenciesTecnics($conn, $id) {
 }
 
 function llegirActuUsu($conn, $idincidencia) {
-    $sql = "SELECT cod_inci, descri,temps FROM ACTUACIONS WHERE cod_inci = ? AND mostrar = 1";
+    $sql = "SELECT cod_inci, descri,temps, `data`FROM ACTUACIONS WHERE cod_inci = ? AND mostrar = 1";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $idincidencia);
 
@@ -411,11 +412,12 @@ function llegirActuUsu($conn, $idincidencia) {
         echo "<div class='p-3 bg-light border rounded'>";
         echo "<b> Comentaris progrés: </b><p>";
         echo "<table class='table table-striped'>";
-        echo "<tr><th>Descripcio</th></tr>";
+        echo "<tr><th>Descripció</th><th>Data</th></tr>";
         while ($row = $result->fetch_assoc()) {
             
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row["descri"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["data"]) . "</td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -490,5 +492,77 @@ function llegirDadesMongodb($collection) {
     echo "</div>"; 
     echo "</div>";
 }
+function llegirInformeTec($conn) {
+    $sql = "SELECT 
+        T.rol AS Tecnic,
+        T.nom AS Nom,
+        I.prioritat AS Prioritat,
+        I.Data AS Data_Inici,
+        SUM(A.temps) AS Temps_Total
+    FROM 
+        INCIDENCIA I
+    INNER JOIN 
+        TECNICS T ON I.cod_tecnic = T.cod_tecnic
+    INNER JOIN 
+        ACTUACIONS A ON I.Id = A.cod_inci
+    INNER JOIN 
+        ESTAT E ON I.cod_estat = E.cod_estat
+    WHERE 
+        E.nom != 'Solucionada'
+    GROUP BY 
+        T.rol, T.nom, I.Id, I.Data, I.prioritat
+    ORDER BY 
+        T.rol, I.prioritat;
+    ";
+
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<div class='container mt-4'>";
+        echo "<div class='p-3 bg-light border rounded'>";
+        echo "<h1> Informe tècnics </h1>";
+
+        $tecnicAnterior = null;
+
+        while ($row = $result->fetch_assoc()) {
+            $tecnicActual = $row["Tecnic"] . " - " . $row["Nom"];
+
+            
+            if ($tecnicActual !== $tecnicAnterior) {
+                if ($tecnicAnterior !== null) {
+                    echo "</table><br>"; 
+                }
+
+                echo "<h4>Tècnic: " . htmlspecialchars($row["Tecnic"]) . " (" . htmlspecialchars($row["Nom"]) . ")</h4>";
+                echo "<table class='table table-striped'>";
+                echo "<tr><th>Prioritat</th><th>Data Inici</th><th>Temps Total</th></tr>";
+
+                $tecnicAnterior = $tecnicActual;
+            }
+
+            
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row["Prioritat"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["Data_Inici"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["Temps_Total"]) . "</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+        echo "</div>";
+        echo "<a href='./' class='btn btn-secondary me-2 mt-3'>Tornar a la pàgina principal</a>";
+        echo "</div>";
+    } else {
+        echo "<p style='text-align:center;'>No hi ha dades</p>";
+    }
+}
+
+
 
 ?>
