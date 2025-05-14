@@ -192,7 +192,7 @@ function actualitzarPrioritat($conn, $id, $prori) {
     }
   }
   function llegirIncidenciesllista($conn) {
-    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat,data_ini_sol FROM INCIDENCIA WHERE cod_estat IN('1','2')";
+    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat,data_ini_sol FROM INCIDENCIA WHERE cod_estat IN('1','2')ORDER BY `data` DESC";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt->execute()) {
@@ -241,7 +241,7 @@ function actualitzarPrioritat($conn, $id, $prori) {
     }
   }
   function llegirIncidenciesAdminist($conn, $id) {
-    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA WHERE Id = $id AND cod_estat IN('1','2')";
+    $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA WHERE Id = $id AND cod_estat IN('1','2') ORDER BY `data` DESC";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt->execute()) {
@@ -306,7 +306,7 @@ function guardarActu($conn, $id, $idincidencia, $descripcio, $visible, $temps, $
 }
 
 function llegirActu($conn, $idincidencia) {
-    $sql = "SELECT cod_inci, descri, temps FROM ACTUACIONS WHERE cod_inci = ?";
+    $sql = "SELECT cod_inci, descri, temps FROM ACTUACIONS WHERE cod_inci = ? ";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $idincidencia);
 
@@ -377,7 +377,7 @@ function llegirIncidenciesTecnics($conn, $id) {
             echo "<td>" . htmlspecialchars($row["cod_tecnic"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
             echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
-            echo "<td>" . htmlspecialchars($row["data_ini_sol"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["data_ini_sol"] ?? '-') . "</td>";
             echo "<td>
                     <form action='actuacions.php' method='post'>
                         <input type='hidden' name='id' value='" . htmlspecialchars($row['cod_tecnic']) . "'>
@@ -397,7 +397,11 @@ function llegirIncidenciesTecnics($conn, $id) {
 }
 
 function llegirActuUsu($conn, $idincidencia) {
-    $sql = "SELECT cod_inci, descri,temps, `data`FROM ACTUACIONS WHERE cod_inci = ? AND mostrar = 1";
+    $sql = "SELECT cod_inci, descri, temps, `data`
+            FROM ACTUACIONS
+            WHERE cod_inci = ? AND mostrar = 1
+            ORDER BY `data` DESC";
+    
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $idincidencia);
 
@@ -414,7 +418,6 @@ function llegirActuUsu($conn, $idincidencia) {
         echo "<table class='table table-striped'>";
         echo "<tr><th>Descripció</th><th>Data</th></tr>";
         while ($row = $result->fetch_assoc()) {
-            
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row["descri"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["data"]) . "</td>";
@@ -428,6 +431,7 @@ function llegirActuUsu($conn, $idincidencia) {
     echo "</div>"; 
     echo "</div>";
 }
+
 function dataIniAct($conn, $id, $dataini) {
     $sql = "UPDATE INCIDENCIA SET data_ini_sol = ? WHERE Id = ?";
     $stmt = $conn->prepare($sql);

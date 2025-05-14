@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['submit_actuacio'])) {
 
       if (!empty($descripcio)) {
-            guardarActu($conn, $id, $idincidencia, $descripcio, $visible, $temps);  
+            guardarActu($conn, $id, $idincidencia, $descripcio, $visible, $temps,$data);  
             
         }
     }
