@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Formulari d'actuació</title>
     <link rel="stylesheet" href="estilos.css"> 
 </head>
+
 <body>
 
     <div class="banner">
@@ -62,14 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="hidden" name="idincidencia" value="<?= htmlspecialchars($idincidencia ?? '') ?>">
             <div class="actuacio-form-group">
                 <label for="descripcio">Descripció de l'actuació (màx. 500 caràcters):</label>
-                <textarea id="descripcio" name="descripcio" maxlength="500" placeholder="Escriu una descripció curta" required class="actuacio-textarea"><?= htmlspecialchars($descripcio ?? '') ?></textarea>
+                <textarea id="descripcio" name="descripcio" maxlength="500" placeholder="Escriu una descripció curta" class="actuacio-textarea"><?= htmlspecialchars($descripcio ?? '') ?></textarea>
 
                 <label for="visible">Visible per l'usuari:
                     <input type="checkbox" id="visible" name="visible" value="1" class="actuacio-checkbox">
                 </label>
 
                 <label for="temps">Temps (minuts):</label>
-                <input type="number" id="temps" name="temps" placeholder="Introdueix el temps invertit en minuts" required class="actuacio-input" value="<?= htmlspecialchars($temps ?? '') ?>">
+                <input type="number" id="temps" name="temps" placeholder="Introdueix el temps invertit en minuts" class="actuacio-input" value="<?= htmlspecialchars($temps ?? '') ?>">
 
                 <button type="submit" name="submit_actuacio" class="actuacio-btn">Envia actuació</button>
             </div>
@@ -100,7 +101,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
            
        
     </div>
-   
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const formActuacio = document.querySelector("form button[name='submit_actuacio']").closest("form");
+    const textareaDescripcio = document.getElementById("descripcio");
+    const botoEnviar = formActuacio.querySelector("button[name='submit_actuacio']");
+
+    let missatgeError = document.createElement("div");
+    missatgeError.className = "text-danger mt-2";
+    missatgeError.style.display = "none";
+    missatgeError.textContent = "La descripció és obligatòria.";
+
+    botoEnviar.parentNode.insertBefore(missatgeError, botoEnviar);
+
+    formActuacio.addEventListener("submit", function (e) {
+      if (textareaDescripcio.value.trim() === "") {
+        e.preventDefault();
+        missatgeError.style.display = "block";
+      } else {
+        missatgeError.style.display = "none";
+      }
+    });
+  });
+</script>
+
+
+
+
+
 
 </body>
 </html>
