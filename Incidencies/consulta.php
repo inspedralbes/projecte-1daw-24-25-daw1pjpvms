@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Consulta d'incidències</title>
-  <link rel="stylesheet" href="estilos2.css">
+  <link rel="stylesheet" href="consultas.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <?php
 require "conexio.php";
@@ -15,22 +15,17 @@ $data = date('Y-m-d H:i:s');
 $ipUsuari = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 $pageUsuari = 'Consulta estat incidencies';
 guardarLog($collection, $User, $data, $ipUsuari ,$pageUsuari);
-  
+
 $codi = $_POST['codi'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
   llegirConsulta($conn, $codi);
   llegirActuUsu($conn, $codi);
   die;
 }
 ?>
-
-
 </head>
 
-
-<body>
-
+<body class="consulta-page">
   <header class="banner">
     <h1 class="bigtitol">Consulta d'incidències</h1>
   </header>
@@ -49,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </form>
     </div>
   </main>
+
 <script>
   const form = document.querySelector("form");
   const inputCodi = document.getElementById("codi");
@@ -68,7 +64,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   });
 </script>
 
-
 </body>
-
 </html>
