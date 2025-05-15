@@ -8,10 +8,15 @@
 </head>
 <body>
 <?php 
+echo "<div class='container mt-4'>";
+echo "<h1> Informes del gestor</h1>";
+  
 require "conexio.php";
 include "funciones.php";
 
 llegirInformeTec($conn);
+echo "<br>";
+llegirDeptInfo($conn);
 
 ?>
 </body>

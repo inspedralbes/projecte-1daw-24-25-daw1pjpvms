@@ -109,10 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 
-    <div class="banner">
-        <h1 class="bigtitol">Formulari d'incidències</h1>
-    </div>
-
+   <header class="banner">
+      <h1 class="bigtitol">Formulari d'incidències</h1>
+    </header>
     <div>
         <form action="" method="post">
             <?php if ($errors > 0): ?>

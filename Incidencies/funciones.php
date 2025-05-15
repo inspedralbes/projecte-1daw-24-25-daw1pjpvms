@@ -480,13 +480,12 @@ function llegirDadesMongodb($collection) {
     echo "<h1> Dades MongoDB del gestor </h1>";
     echo "<div class='p-3 bg-light border rounded'>";
     echo "<table class='table table-striped'>";
-    echo "<tr><th>Usuari</th><th>Data</th><th>IP</th><th>Pàgina visitada</th></tr>";
+    echo "<tr><th>Usuari</th><th>Data</th><th>Pàgina visitada</th></tr>";
 
     foreach ($documents as $document) {
         echo "<tr>";
         echo "<td>" . htmlspecialchars($document['User'] ?? "x") . "</td>";
         echo "<td>" . htmlspecialchars($document['Data'] ?? "x") . "</td>";
-        echo "<td>" . htmlspecialchars($document['ip_origin'] ?? "x") . "</td>";
         echo "<td>" . htmlspecialchars($document['pagina visitada'] ?? "x") . "</td>";
         echo "</tr>";
     }
@@ -498,6 +497,7 @@ function llegirDadesMongodb($collection) {
 }
 function llegirInformeTec($conn) {
     $sql = "SELECT 
+        I.Id AS ID_Incidencia,
         T.rol AS Tecnic,
         T.nom AS Nom,
         I.prioritat AS Prioritat,
@@ -514,7 +514,7 @@ function llegirInformeTec($conn) {
     WHERE 
         E.nom != 'Solucionada'
     GROUP BY 
-        T.rol, T.nom, I.Id, I.Data, I.prioritat
+        I.Id, T.rol, T.nom,I.Data, I.prioritat
     ORDER BY 
         T.rol, I.prioritat;
     ";
@@ -530,7 +530,7 @@ function llegirInformeTec($conn) {
     if ($result->num_rows > 0) {
         echo "<div class='container mt-4'>";
         echo "<div class='p-3 bg-light border rounded'>";
-        echo "<h1> Informe tècnics </h1>";
+        echo "<h1> Tècnics </h1>";
 
         $tecnicAnterior = null;
 
@@ -545,13 +545,14 @@ function llegirInformeTec($conn) {
 
                 echo "<h4>Tècnic: " . htmlspecialchars($row["Tecnic"]) . " (" . htmlspecialchars($row["Nom"]) . ")</h4>";
                 echo "<table class='table table-striped'>";
-                echo "<tr><th>Prioritat</th><th>Data Inici</th><th>Temps Total</th></tr>";
+                echo "<tr><th>ID Incidéncia</th><th>Prioritat</th><th>Data Inici</th><th>Temps Total</th></tr>";
 
                 $tecnicAnterior = $tecnicActual;
             }
 
             
             echo "<tr>";
+            echo "<td>" . htmlspecialchars($row["ID_Incidencia"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["Prioritat"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["Data_Inici"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["Temps_Total"]) . "</td>";
@@ -560,13 +561,70 @@ function llegirInformeTec($conn) {
 
         echo "</table>";
         echo "</div>";
-        echo "<a href='./' class='btn btn-secondary me-2 mt-3'>Tornar a la pàgina principal</a>";
-        echo "</div>";
+
+     
     } else {
         echo "<p style='text-align:center;'>No hi ha dades</p>";
     }
 }
 
+function llegirDeptInfo($conn) {
+    $sql = "SELECT
+  D.nom AS Departament,
+  (SELECT COUNT(*)
+     FROM INCIDENCIA I
+     WHERE I.cod_dept = D.cod_dept
+  ) AS Nombre_Incidencies,
+  (SELECT SUM(A.temps)
+     FROM INCIDENCIA I2
+     JOIN ACTUACIONS A ON A.cod_inci = I2.Id
+     WHERE I2.cod_dept = D.cod_dept
+  ) AS Temps_Total
+FROM DEPARTAMENT D;";  
+$stmt = $conn->prepare($sql);
+
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+
+echo "<div class='p-3 bg-light border rounded'>";
+echo "<h1>Departaments</h1>";
+
+$departamentAnterior = null;
+
+while ($row = $result->fetch_assoc()) {
+    $departamentActual = $row["Departament"];
+
+    if ($departamentActual !== $departamentAnterior) {
+        if ($departamentAnterior !== null) {
+            echo "</table><br>";
+        }
+
+        echo "<h4>Departament: " . htmlspecialchars($row["Departament"]) . "</h4>";
+        echo "<table class='table table-striped'>";
+        echo "<tr><th>Nombre d'incidències</th><th>Temps total dedicat (minuts)</th></tr>";
+
+        $departamentAnterior = $departamentActual;
+    }
+
+    echo "<tr>";
+    echo "<td>" . htmlspecialchars($row["Nombre_Incidencies"]) . "</td>";
+    echo "<td>" . htmlspecialchars($row["Temps_Total"]) . "</td>";
+    echo "</tr>";
+}
+
+echo "</table>";
+
+echo "<a href='./' class='btn btn-secondary me-2 mt-3'>Tornar a la pàgina principal</a>";
+echo "</div>";
+
+
+    }
+}
 
 
 ?>
