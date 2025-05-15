@@ -3,4 +3,5 @@ Con este proyecto hemos podido mejorar y dar a enseñar nuestras habilidades y c
 Hemos implementado HTML, CSS, PHP, una base de datos en MONGODB, Javascript, repositorios del CSS.
 
 
-![Diagrama de usos drawio](https://github.com/user-attachments/assets/d4bbad79-4b50-4523-adb9-5959c49323dd)
+![Diagrama de usos ](https://github.com/user-attachments/assets/666a0895-bb2d-43e3-82fd-d47db8430e83)
+
