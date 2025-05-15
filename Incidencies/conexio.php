@@ -1,9 +1,14 @@
 <?php
 //Mysql
-$servername = "db";
-$username = "usuari";
-$password = "paraula_de_pas";
+$servername = "daw.inspedralbes.cat";
+$username = "a24pauvermac_incidencies";
+$password = "Ef&Ci7=@A%MG/y|1";
 $dbname = "a24pauvermac_incidencies";
+
+//$conn = new mysqli("db", "b", "c", "c");
+
+
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Error en la connexió amb la base de dades: " . $conn->connect_error);
