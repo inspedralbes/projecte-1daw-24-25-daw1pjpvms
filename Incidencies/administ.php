@@ -44,8 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <title>Formulari d'incidències</title>
+    <title>Llistat d'incidències</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="icona.png">
+
 
 </head>
 
@@ -139,9 +141,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 </body>
-<footer>
-   <p> Paula Vera | Marcos Suárez | Institut Pedralbes | 2025 </p>
-   
-  </footer>
-
 </html>

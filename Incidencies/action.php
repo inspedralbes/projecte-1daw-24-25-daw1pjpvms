@@ -4,23 +4,7 @@
     <meta charset="UTF-8">
     <title>Formulari d'incidències</title>
     <link rel="stylesheet" href="estilos.css">
-   
-    <style>
-        textarea {
-            width: 100%;
-            resize: none; 
-            padding: 8px;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
-
-        select {
-            width: 100%;
-            padding: 8px;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
-    </style>
+    <link rel="icon" type="image/png" href="icona.png">
 </head>
 <?php
 
@@ -83,29 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <title>Formulari d'incidències</title>
-    <link rel="stylesheet" href="estilos.css">
-    <style>
-        textarea {
-            width: 100%;
-            resize: none; 
-            padding: 8px;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
-
-        select {
-            width: 100%;
-            padding: 8px;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
-    </style>
-</head>
 
 <body>
 
@@ -132,15 +93,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label for="descripcio">Descripció de la incidència (màx. 200 caràcters): <span class="boto"><?= $descripcioErr ?></span></label>
             <textarea class="insert" id="descripcio" name="descripcio" rows="5" maxlength="200" placeholder="Escriu una descripció curta"><?= htmlspecialchars($descripcio) ?></textarea>
 
-            <button class="button type1" type="submit">
-                <span class="btn-txt">Envia</span>
-            </button>
+                <button type="submit" class="admin">Envia</button>
         </form>
     </div>
 
-</body>
-<footer>
+    <footer>
    <p> Paula Vera | Marcos Suárez | Institut Pedralbes | 2025 </p>
    
   </footer>
+</body>
+
 </html>

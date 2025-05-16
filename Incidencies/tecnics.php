@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Formulari d'incidències</title>
+      <link rel="icon" type="image/png" href="icona.png">
+
     <link rel="stylesheet" href="estilos.css">
 
 </head>
@@ -12,16 +14,32 @@
         <h1 class="bigtitol">Estat d'incidències</h1>
     </div>
 
-    <form action="" method="post">
-        <div>
-            <label for="id">El teu id de tècnic:</label>  
-            <textarea class="insert" id="id" name="id" placeholder="Introdueix el teu ID"><?= htmlspecialchars($id ?? '') ?></textarea>
-            <button class="button type1" type="submit" name="submit_id">
-                <span class="btn-txt">Envia ID</span>
-            </button>
-        </div>
-        <br>
-    </form>
+   <form action="" method="post">
+  <div>
+    <label for="id">El teu id de tècnic:</label>  
+    <textarea class="insert" id="id" name="id" placeholder="Introdueix el teu ID"><?= htmlspecialchars($id ?? '') ?></textarea>
+    <button type="submit" name="submit_id" class = "admin"> Envia </button>
+  
+    
+  </div>
+  <br>
+  <span id="missatge-error" style="display: none;">Només es permeten números.</span>
+</form>
+
+<script>
+  const form = document.querySelector("form");
+  const inputCodi = document.getElementById("id");
+  const missatge = document.getElementById("missatge-error");
+
+  form.addEventListener("submit", function (e) {
+    if (!/^\d+$/.test(inputCodi.value.trim())) {
+      e.preventDefault(); 
+      missatge.style.display = "inline"; // o "block" si vols que ocupi línia sencera
+    } else {
+      missatge.style.display = "none";
+    }
+  });
+</script>
 
 </body>
 <footer>

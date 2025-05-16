@@ -47,6 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <title>Formulari d'actuació</title>
     <link rel="stylesheet" href="estilos.css"> 
+    <link rel="icon" type="image/png" href="icona.png">
+
 </head>
 
 <body>
@@ -54,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="banner">
         <h1 class="bigtitol">Actuació de la incidència</h1>
           <a href='./' class="actuacio-link">Tornar a la pàgina principal</a>
-            <a href="llistat.php" class="actuacio-link">Espai de control</a>
+          
     </div>
 
     <div class="actuacio-container">
@@ -72,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="temps">Temps (minuts):</label>
                 <input type="number" id="temps" name="temps" placeholder="Introdueix el temps invertit en minuts" class="actuacio-input" value="<?= htmlspecialchars($temps ?? '') ?>">
 
-                <button type="submit" name="submit_actuacio" class="actuacio-btn">Envia actuació</button>
+                <button type="submit" name="submit_actuacio" class="admin">Envia actuació</button>
             </div>
         </form>
 
@@ -92,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="datafi">Data fi de l'actuació:</label>
                     <input type="date" id="datafi" name="datafi" value="<?= htmlspecialchars($datafi ?? '') ?>" class="actuacio-input">
 
-                    <button type="submit" name="submit_estat" class="actuacio-btn">Envia estat</button>
+                    <button type="submit" name="submit_estat" class="admin">Envia estat</button>
                 </div>
             </form>
         
@@ -131,7 +133,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 </body>
-<footer>
-   <p> Paula Vera | Marcos Suárez | Institut Pedralbes | 2025 </p> 
-  </footer>
+
 </html>

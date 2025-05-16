@@ -63,7 +63,7 @@ a {
     text-align: center;
 }
 
-#admin {
+.admin {
     border: 1px solid rgb(145, 145, 145);
     background-color: rgb(49, 49, 49);
     text-decoration: none;
@@ -77,11 +77,11 @@ a {
     width: 50%;
 }
 
-a, #admin {
+a, .admin {
     transition: box-shadow 0.3s ease;
 }
 
-a:hover, #admin:hover {
+a:hover, .admin:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 

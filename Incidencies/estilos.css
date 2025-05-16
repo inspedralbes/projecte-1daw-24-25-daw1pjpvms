@@ -341,18 +341,21 @@ button {
     text-decoration: none;
     justify-content: center;
     font-weight: bold;
-    color: #424344;
+  color: white;
     padding: 8px 15px;
     border: 1px solid rgb(80, 80, 80);
     border-radius: 6px;
     transition: all 0.3s;
-    background-color: #f9f9f9;
+     background-color: #424344;
+   
 }
 
 
 .actuacio-link:hover {
-    background-color: #424344;
-    color: white;
+   
+     background-color: #f9f9f9;
+    
+      color: #424344;
 }
 
 .actuacio-estado-section {
@@ -433,4 +436,50 @@ footer p{
 font-weight: 100;
 margin-top: 2.5vh;
 color: rgb(240, 240, 240);
+}
+textarea {
+            width: 100%;
+            resize: none; 
+            padding: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+
+.admin {
+    border: 1px solid rgb(145, 145, 145);
+    background-color: rgb(49, 49, 49);
+    text-decoration: none;
+    font-weight: lighter;
+    color: #f0f0f0d5;
+    border-radius: 10px;
+    display: block;
+    margin: 15px 15vw;
+    padding: 10px;
+    text-align: center;
+  
+}
+
+a, .admin {
+    transition: box-shadow 0.3s ease;
+}
+
+a:hover, .admin:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+button.admin {
+    height: 5vh;
+    margin: auto;
+}
+
+span{
+    margin-left: 34px;
 }
