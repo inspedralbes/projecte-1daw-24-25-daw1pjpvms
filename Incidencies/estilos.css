@@ -418,3 +418,19 @@ color: rgb(240, 240, 240);
     box-shadow: 5px 7px 10px rgba(0, 0, 0, 0.281); 
     color: rgb(240, 240, 240);
 }
+
+footer{
+   background-color: #424344;
+   position: fixed;
+   bottom: 0;
+   width: 100%;
+   text-align: center;
+   height: 7vh;
+   
+}
+
+footer p{
+font-weight: 100;
+margin-top: 2.5vh;
+color: rgb(240, 240, 240);
+}

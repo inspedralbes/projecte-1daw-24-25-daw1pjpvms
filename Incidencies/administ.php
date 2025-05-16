@@ -139,5 +139,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 </body>
+<footer>
+   <p> Paula Vera | Marcos Suárez | Institut Pedralbes | 2025 </p>
+   
+  </footer>
 
 </html>

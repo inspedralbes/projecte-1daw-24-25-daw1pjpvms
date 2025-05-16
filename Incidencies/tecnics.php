@@ -24,6 +24,10 @@
     </form>
 
 </body>
+<footer>
+   <p> Paula Vera | Marcos Suárez | Institut Pedralbes | 2025 </p>
+   
+  </footer>
 </html>
 <?php
 require "conexio.php";
