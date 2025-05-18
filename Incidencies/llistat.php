@@ -23,16 +23,14 @@ include "funciones.php";
   $data = date('Y-m-d H:i:s');
   $ipUsuari = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
   $pageUsuari = 'Llistat Incidencies';
-  guardarLog($collection, $User, $data, $ipUsuari ,$pageUsuari);
-  
+  $navegador = $_SERVER['HTTP_USER_AGENT'];
+  guardarLog($collection, $User, $data, $ipUsuari, $pageUsuari, $navegador);
+
   llegirIncidenciesllista($conn);
-  
+
   $conn->close();
   ?>
 
-  <div style="text-align:center; margin-top:20px;">
-    <a href="index.html">
-  </div>
 </body>
 
 </html>

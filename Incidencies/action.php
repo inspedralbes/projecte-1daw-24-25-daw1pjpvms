@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ca">
+
 <head>
     <meta charset="UTF-8">
     <title>Formulari d'incidències</title>
@@ -23,9 +24,13 @@ $proritat = 'Sense asignar';
 $User = 'Professor';
 $data = date('Y-m-d H:i:s');
 $ipUsuari = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-$pageUsuari = 'Form Incidencies';
+$pageUsuari = 'Formulari Incidències';
+$navegador = $_SERVER['HTTP_USER_AGENT'];
 
-guardarLog($collection, $User, $data, $ipUsuari ,$pageUsuari);
+mostraHeader($pageUsuari);
+mostraFooter();
+guardarLog($collection, $User, $data, $ipUsuari, $pageUsuari, $navegador);
+
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -46,22 +51,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($errors == 0) {
 
-        
+
         guardarIncidencia($conn, $departament, $descripcio, $data, $estat, $codtec, $proritat);
         $idllegit = llegirId($conn, $data);
-     
+
 
         echo "<div class='phpcuadre2'>";
+        echo "<h1> Incidència enviada </h1>";
         echo "<p><strong>Departament:</strong> $departament</p>";
         echo "<p><strong>Descripció:</strong> $descripcio</p>";
         echo "<p id='important'><strong >ID de consulta:</strong> $idllegit</p>";
         echo "<b><a href='./'>Tornar a la pàgina principal</a></b>";
         echo "</div>";
-        
+
         die;
     }
 }
-
 
 
 
@@ -70,9 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 
-   <header class="banner">
-      <h1 class="bigtitol">Formulari d'incidències</h1>
-    </header>
+
     <div>
         <form action="" method="post">
             <?php if ($errors > 0): ?>
@@ -86,21 +89,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <option value="2" <?= $departament == '2' ? 'selected' : '' ?>>Fisica</option>
                 <option value="3" <?= $departament == '3' ? 'selected' : '' ?>>Llengua catalana</option>
                 <option value="4" <?= $departament == '4' ? 'selected' : '' ?>>Matematiques</option>
-                
-               
+
+
             </select>
 
             <label for="descripcio">Descripció de la incidència (màx. 200 caràcters): <span class="boto"><?= $descripcioErr ?></span></label>
             <textarea class="insert" id="descripcio" name="descripcio" rows="5" maxlength="200" placeholder="Escriu una descripció curta"><?= htmlspecialchars($descripcio) ?></textarea>
 
-                <button type="submit" class="admin">Envia</button>
+            <button type="submit" class="admin">Envia</button>
         </form>
     </div>
 
-    <footer>
-   <p> Paula Vera | Marcos Suárez | Institut Pedralbes | 2025 </p>
-   
-  </footer>
+
 </body>
 
 </html>

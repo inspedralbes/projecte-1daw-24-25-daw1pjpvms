@@ -1,6 +1,7 @@
 
 <?php
-function actualitzarEstat($conn, $id, $estat) {
+function actualitzarEstat($conn, $id, $estat)
+{
     $sql = "UPDATE INCIDENCIA SET cod_estat = ? WHERE Id = ?";
     $stmt = $conn->prepare($sql);
 
@@ -17,7 +18,8 @@ function actualitzarEstat($conn, $id, $estat) {
     $stmt->close();
 }
 
-function llegirEstat($conn, $codi_estat) {
+function llegirEstat($conn, $codi_estat)
+{
     $sql = "SELECT nom FROM ESTAT WHERE cod_estat = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $codi_estat);
@@ -34,7 +36,8 @@ function llegirEstat($conn, $codi_estat) {
     }
 }
 
-function llegirDept($conn, $codi_dept) {
+function llegirDept($conn, $codi_dept)
+{
     $sql = "SELECT nom FROM DEPARTAMENT WHERE cod_dept = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $codi_dept);
@@ -51,7 +54,8 @@ function llegirDept($conn, $codi_dept) {
     }
 }
 
-function llegirIncidenciaPerId($conn, $id) {
+function llegirIncidenciaPerId($conn, $id)
+{
     $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA WHERE Id = ? AND cod_estat IN('1','2')";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
@@ -69,7 +73,7 @@ function llegirIncidenciaPerId($conn, $id) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
             $LlegirDept = llegirDept($conn, $row["cod_dept"]);
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>"; 
+            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>";
             echo "<td>" . htmlspecialchars($LlegirDept) . "</td>";
             echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["Data"]) . "</td>";
@@ -80,14 +84,15 @@ function llegirIncidenciaPerId($conn, $id) {
         }
         echo "</table>";
     } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
+        echo "<p style='text-align:center;'>No hi ha incidenciès</p>";
     }
 }
 
-function guardarIncidencia($conn, $departament, $descripcio, $data, $estat, $codtec, $proritat) {
+function guardarIncidencia($conn, $departament, $descripcio, $data, $estat, $codtec, $proritat)
+{
     $sql = "INSERT INTO INCIDENCIA (cod_dept, Descripcio, Data, cod_estat, cod_tecnic, prioritat) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssiis", $departament, $descripcio, $data, $estat, $codtec, $proritat );
+    $stmt->bind_param("sssiis", $departament, $descripcio, $data, $estat, $codtec, $proritat);
 
     if (!$stmt->execute()) {
         die("Error en la consulta: " . $stmt->error);
@@ -96,7 +101,8 @@ function guardarIncidencia($conn, $departament, $descripcio, $data, $estat, $cod
     $stmt->close();
 }
 
-function llegirId($conn, $data) {
+function llegirId($conn, $data)
+{
     $sql = "SELECT Id FROM INCIDENCIA WHERE Data = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $data);
@@ -113,7 +119,8 @@ function llegirId($conn, $data) {
     }
 }
 
-function actualitzarTecnic($conn, $id, $tecnic) {
+function actualitzarTecnic($conn, $id, $tecnic)
+{
     $sql = "UPDATE INCIDENCIA SET cod_tecnic = ? WHERE Id = ?";
     $stmt = $conn->prepare($sql);
 
@@ -130,7 +137,9 @@ function actualitzarTecnic($conn, $id, $tecnic) {
     $stmt->close();
 }
 
-function actualitzarPrioritat($conn, $id, $prori) {
+
+function actualitzarPrioritat($conn, $id, $prori)
+{
     $sql = "UPDATE INCIDENCIA SET prioritat = ? WHERE Id = ?";
     $stmt = $conn->prepare($sql);
 
@@ -146,7 +155,8 @@ function actualitzarPrioritat($conn, $id, $prori) {
 
     $stmt->close();
 }
-  function llegirConsulta($conn, $codi) {
+function llegirConsulta($conn, $codi)
+{
 
     $sql = "SELECT cod_dept, Descripcio, cod_estat FROM INCIDENCIA WHERE Id =$codi";
     $stmt = $conn->prepare($sql);
@@ -154,7 +164,7 @@ function actualitzarPrioritat($conn, $id, $prori) {
     if (!$stmt->execute()) {
         die("Error executing statement: " . $stmt->error);
     }
-    
+
 
     $result = $stmt->get_result();
 
@@ -185,13 +195,12 @@ function actualitzarPrioritat($conn, $id, $prori) {
         echo "</table>";
         echo "</div>";
         echo "</div>";
-
-
     } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
+        echo "<p style='text-align:center;'>No hi ha consultes</p>";
     }
-  }
-  function llegirIncidenciesllista($conn) {
+}
+function llegirIncidenciesllista($conn)
+{
     $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat,data_ini_sol FROM INCIDENCIA WHERE cod_estat IN('1','2')ORDER BY `data` DESC";
     $stmt = $conn->prepare($sql);
 
@@ -211,15 +220,15 @@ function actualitzarPrioritat($conn, $id, $prori) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
             $LlegirDept = llegirDept($conn, $row["cod_dept"]);
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>"; 
+            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>";
             echo "<td>" . htmlspecialchars($LlegirDept) . "</td>";
             echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["Data"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["cod_tecnic"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
             echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
-          
-  echo "<td>
+
+            echo "<td>
   <form action='administ.php' method='post'>
     <input type='hidden' name='id' value='" . htmlspecialchars($row['Id']) . "'>
     <input type='hidden' name='dataini' value='" . htmlspecialchars($row['data_ini_sol'] ?? '') . "'>
@@ -229,18 +238,17 @@ function actualitzarPrioritat($conn, $id, $prori) {
 </td>";
 
             echo "</tr>";
-            
         }
         echo "</table>";
         echo "<a href='./' class='btn btn-secondary me-2'>Tornar a la pàgina principal</a>";
         echo "</div>";
         echo "</div>";
-
     } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
+        echo "<p style='text-align:center;'>No hi ha incidenciès</p>";
     }
-  }
-  function llegirIncidenciesAdminist($conn, $id) {
+}
+function llegirIncidenciesAdminist($conn, $id)
+{
     $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic,prioritat FROM INCIDENCIA WHERE Id = $id AND cod_estat IN('1','2') ORDER BY `data` DESC";
     $stmt = $conn->prepare($sql);
 
@@ -260,7 +268,7 @@ function actualitzarPrioritat($conn, $id, $prori) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
             $LlegirDept = llegirDept($conn, $row["cod_dept"]);
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>"; 
+            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>";
             echo "<td>" . htmlspecialchars($LlegirDept) . "</td>";
             echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["Data"]) . "</td>";
@@ -268,16 +276,16 @@ function actualitzarPrioritat($conn, $id, $prori) {
             echo "<td>" . htmlspecialchars($row["prioritat"]) . "</td>";
             echo "<td>" . htmlspecialchars($nomEstat) . "</td>";
             echo "</tr>";
-            
         }
         echo "</table>";
         echo "</div>";
         echo "</div>";
     } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
+        echo "<p style='text-align:center;'>No hi ha incidenciès</p>";
     }
-  }
-  function llegirIdTec($conn, $id) {
+}
+function llegirIdTec($conn, $id)
+{
     $sql = "SELECT Id FROM INCIDENCIA WHERE cod_tecnic = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $id);
@@ -293,19 +301,21 @@ function actualitzarPrioritat($conn, $id, $prori) {
         return "000";
     }
 }
-function guardarActu($conn, $id, $idincidencia, $descripcio, $visible, $temps, $data) {
+function guardarActu($conn, $id, $idincidencia, $descripcio, $visible, $temps, $data)
+{
     $sql = "INSERT INTO ACTUACIONS (cod_tecnic, cod_inci, descri, mostrar, temps, `data`) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iisiis", $id, $idincidencia, $descripcio, $visible, $temps, $data );
+    $stmt->bind_param("iisiis", $id, $idincidencia, $descripcio, $visible, $temps, $data);
 
     if (!$stmt->execute()) {
         die("Error en la consulta: " . $stmt->error);
     }
 
-    $stmt->close(); 
+    $stmt->close();
 }
 
-function llegirActu($conn, $idincidencia) {
+function llegirActu($conn, $idincidencia)
+{
     $sql = "SELECT cod_inci, descri, temps FROM ACTUACIONS WHERE cod_inci = ? ";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $idincidencia);
@@ -322,7 +332,7 @@ function llegirActu($conn, $idincidencia) {
         echo "<tr><th>Id Incidència</th><th>Descripció</th><th>Temps (min)</th></tr>";
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["cod_inci"]) . "</td>"; 
+            echo "<td>" . htmlspecialchars($row["cod_inci"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["descri"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["temps"]) . "</td>";
             echo "</tr>";
@@ -333,7 +343,8 @@ function llegirActu($conn, $idincidencia) {
     }
 }
 
-function llegirIncidenciesTecnics($conn, $id) {
+function llegirIncidenciesTecnics($conn, $id)
+{
     if ($id === null) {
         echo "<p style='text-align:center;'>No hi ha cap ID proporcionat</p>";
         return;
@@ -342,7 +353,7 @@ function llegirIncidenciesTecnics($conn, $id) {
     $sql = "SELECT Id, cod_dept, Descripcio, Data, cod_estat, cod_tecnic, prioritat, data_ini_sol
             FROM INCIDENCIA 
             WHERE cod_tecnic = ? AND cod_estat IN('1','2')";
-    
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
 
@@ -370,7 +381,7 @@ function llegirIncidenciesTecnics($conn, $id) {
             $nomEstat = llegirEstat($conn, $row["cod_estat"]);
             $LlegirDept = llegirDept($conn, $row["cod_dept"]);
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>"; 
+            echo "<td>" . htmlspecialchars($row["Id"]) . "</td>";
             echo "<td>" . htmlspecialchars($LlegirDept) . "</td>";
             echo "<td>" . htmlspecialchars($row["Descripcio"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["Data"]) . "</td>";
@@ -396,12 +407,13 @@ function llegirIncidenciesTecnics($conn, $id) {
     $stmt->close();
 }
 
-function llegirActuUsu($conn, $idincidencia) {
+function llegirActuUsu($conn, $idincidencia)
+{
     $sql = "SELECT cod_inci, descri, temps, `data`
             FROM ACTUACIONS
             WHERE cod_inci = ? AND mostrar = 1
             ORDER BY `data` DESC";
-    
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $idincidencia);
 
@@ -425,14 +437,15 @@ function llegirActuUsu($conn, $idincidencia) {
         }
         echo "</table>";
     } else {
-        echo "<p style='text-align:center;'>No hi ha inscrits</p>";
+        echo "<p style='text-align:center;'>No hi han comentaris</p>";
     }
     echo "<a href='./' class='btn btn-secondary me-2'>Tornar a la pàgina principal</a>";
-    echo "</div>"; 
+    echo "</div>";
     echo "</div>";
 }
 
-function dataIniAct($conn, $id, $dataini) {
+function dataIniAct($conn, $id, $dataini)
+{
     $sql = "UPDATE INCIDENCIA SET data_ini_sol = ? WHERE Id = ?";
     $stmt = $conn->prepare($sql);
 
@@ -448,7 +461,8 @@ function dataIniAct($conn, $id, $dataini) {
 
     $stmt->close();
 }
-function dataFiAct($conn, $id, $datafi) {
+function dataFiAct($conn, $id, $datafi)
+{
     $sql = "UPDATE INCIDENCIA SET data_fi_sol = ? WHERE Id = ?";
     $stmt = $conn->prepare($sql);
 
@@ -464,38 +478,44 @@ function dataFiAct($conn, $id, $datafi) {
 
     $stmt->close();
 }
-function guardarLog($collection, $User, $dataUsuari, $ipUsuari ,$pageUsuari) {
+function guardarLog($collection, $User, $dataUsuari, $ipUsuari, $pageUsuari, $user_agent)
+{
     $collection->insertOne([
-    'User' => $User,
-    'Data' => $dataUsuari,
-    'ip_origin' => $ipUsuari,
-    'pagina visitada' => $pageUsuari
-]);  
+        'User' => $User,
+        'Data' => $dataUsuari,
+        'ip_origin' => $ipUsuari,
+        'pagina visitada' => $pageUsuari,
+        'navegador' => $user_agent
+
+    ]);
 }
 
-function llegirDadesMongodb($collection) {
+function llegirDadesMongodb($collection)
+{
     $documents = $collection->find();
 
     echo "<div class='container mt-4'>";
     echo "<h1> Dades MongoDB del gestor </h1>";
     echo "<div class='p-3 bg-light border rounded'>";
     echo "<table class='table table-striped'>";
-    echo "<tr><th>Usuari</th><th>Data</th><th>Pàgina visitada</th></tr>";
+    echo "<tr><th>Usuari</th><th>Data</th><th>Pàgina visitada</th><th>Navegador</th></tr>";
 
     foreach ($documents as $document) {
         echo "<tr>";
         echo "<td>" . htmlspecialchars($document['User'] ?? "x") . "</td>";
         echo "<td>" . htmlspecialchars($document['Data'] ?? "x") . "</td>";
         echo "<td>" . htmlspecialchars($document['pagina visitada'] ?? "x") . "</td>";
+        echo "<td>" . htmlspecialchars($document['navegador'] ?? "x") . "</td>";
         echo "</tr>";
     }
 
     echo "</table>";
     echo "<a href='./' class='btn btn-secondary me-2'>Tornar a la pàgina principal</a>";
-    echo "</div>"; 
+    echo "</div>";
     echo "</div>";
 }
-function llegirInformeTec($conn) {
+function llegirInformeTec($conn)
+{
     $sql = "SELECT 
         I.Id AS ID_Incidencia,
         T.rol AS Tecnic,
@@ -531,26 +551,20 @@ function llegirInformeTec($conn) {
         echo "<div class='container mt-4'>";
         echo "<div class='p-3 bg-light border rounded'>";
         echo "<h1> Tècnics </h1>";
-
         $tecnicAnterior = null;
-
         while ($row = $result->fetch_assoc()) {
             $tecnicActual = $row["Tecnic"] . " - " . $row["Nom"];
-
-            
             if ($tecnicActual !== $tecnicAnterior) {
                 if ($tecnicAnterior !== null) {
-                    echo "</table><br>"; 
+                    echo "</table><br>";
                 }
-
                 echo "<h4>Tècnic: " . htmlspecialchars($row["Tecnic"]) . " (" . htmlspecialchars($row["Nom"]) . ")</h4>";
                 echo "<table class='table table-striped'>";
                 echo "<tr><th>ID Incidéncia</th><th>Prioritat</th><th>Data Inici</th><th>Temps Total</th></tr>";
-
                 $tecnicAnterior = $tecnicActual;
             }
 
-            
+
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row["ID_Incidencia"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["Prioritat"]) . "</td>";
@@ -561,14 +575,13 @@ function llegirInformeTec($conn) {
 
         echo "</table>";
         echo "</div>";
-
-     
     } else {
         echo "<p style='text-align:center;'>No hi ha dades</p>";
     }
 }
 
-function llegirDeptInfo($conn) {
+function llegirDeptInfo($conn)
+{
     $sql = "SELECT
   D.nom AS Departament,
   (SELECT COUNT(*)
@@ -580,8 +593,8 @@ function llegirDeptInfo($conn) {
      JOIN ACTUACIONS A ON A.cod_inci = I2.Id
      WHERE I2.cod_dept = D.cod_dept
   ) AS Temps_Total
-FROM DEPARTAMENT D;";  
-$stmt = $conn->prepare($sql);
+FROM DEPARTAMENT D;";
+    $stmt = $conn->prepare($sql);
 
     if (!$stmt->execute()) {
         die("Error executing statement: " . $stmt->error);
@@ -591,40 +604,47 @@ $stmt = $conn->prepare($sql);
 
     if ($result->num_rows > 0) {
 
-echo "<div class='p-3 bg-light border rounded'>";
-echo "<h1>Departaments</h1>";
+        echo "<div class='p-3 bg-light border rounded'>";
+        echo "<h1>Departaments</h1>";
 
-$departamentAnterior = null;
+        $departamentAnterior = null;
 
-while ($row = $result->fetch_assoc()) {
-    $departamentActual = $row["Departament"];
+        while ($row = $result->fetch_assoc()) {
+            $departamentActual = $row["Departament"];
 
-    if ($departamentActual !== $departamentAnterior) {
-        if ($departamentAnterior !== null) {
-            echo "</table><br>";
+            if ($departamentActual !== $departamentAnterior) {
+                if ($departamentAnterior !== null) {
+                    echo "</table><br>";
+                }
+
+                echo "<h4>Departament: " . htmlspecialchars($row["Departament"]) . "</h4>";
+                echo "<table class='table table-striped'>";
+                echo "<tr><th>Nombre d'incidències</th><th>Temps total dedicat (minuts)</th></tr>";
+
+                $departamentAnterior = $departamentActual;
+            }
+
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row["Nombre_Incidencies"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["Temps_Total"]) . "</td>";
+            echo "</tr>";
         }
 
-        echo "<h4>Departament: " . htmlspecialchars($row["Departament"]) . "</h4>";
-        echo "<table class='table table-striped'>";
-        echo "<tr><th>Nombre d'incidències</th><th>Temps total dedicat (minuts)</th></tr>";
+        echo "</table>";
 
-        $departamentAnterior = $departamentActual;
-    }
-
-    echo "<tr>";
-    echo "<td>" . htmlspecialchars($row["Nombre_Incidencies"]) . "</td>";
-    echo "<td>" . htmlspecialchars($row["Temps_Total"]) . "</td>";
-    echo "</tr>";
-}
-
-echo "</table>";
-
-echo "<a href='./' class='btn btn-secondary me-2 mt-3'>Tornar a la pàgina principal</a>";
-echo "</div>";
-
-
+        echo "<a href='./' class='btn btn-secondary me-2 mt-3'>Tornar a la pàgina principal</a>";
+        echo "</div>";
     }
 }
-
+function mostraFooter()
+{
+    echo "<footer> <p> Paula Vera | Marcos Suárez | Institut Pedralbes | 2025 </p></footer>";
+}
+function mostraHeader($apartat)
+{
+    echo "<header class='banner'>";
+    echo "<h1 class='bigtitol'>$apartat</h1>";
+    echo "</header> ";
+}
 
 ?>

@@ -28,7 +28,7 @@ body {
     align-items: center;
     padding-top: 11%;
     box-sizing: border-box;
-    opacity: 0; 
+    opacity: 0;
     animation: aparicioSuau 1s forwards;
     text-align: center;
 }
@@ -37,8 +37,9 @@ body {
 @keyframes aparicioSuau {
     from {
         opacity: 0;
-        transform: translateY(20px); 
+        transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -77,11 +78,13 @@ a {
     width: 50%;
 }
 
-a, .admin {
+a,
+.admin {
     transition: box-shadow 0.3s ease;
 }
 
-a:hover, .admin:hover {
+a:hover,
+.admin:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -128,23 +131,26 @@ input[type="text"]:focus {
         margin-left: 5vw;
     }
 }
+
 .subtitol {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
 }
-footer{
+
+footer {
     background-color: #424344;
     position: fixed;
     bottom: 0;
     width: 100%;
     height: 7vh;
-     text-align: center;
-   
-  
+    text-align: center;
+
+
 }
-footer p{
-font-weight: 100;
-margin-top: 2.5vh;
-color: rgb(240, 240, 240);
+
+footer p {
+    font-weight: 100;
+    margin-top: 2.5vh;
+    color: rgb(240, 240, 240);
 }
